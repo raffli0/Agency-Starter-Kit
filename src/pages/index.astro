@@ -6,7 +6,6 @@ import Testimonials from "../components/sections/Testimonials.astro";
 import Cta from "../components/sections/Cta.astro";
 import Brands from "../components/sections/Brands.astro";
 import Container from "../components/ui/Container.astro";
-import Button from "@/components/ui/button.astro";
 import { siteConfig } from "../config/site";
 import { services } from "../data/services";
 import { testimonials } from "../data/testimonials";
@@ -36,28 +35,5 @@ const hero: HeroConfig = {
         <Testimonials testimonials={testimonials} />
         <Brands brands={brands} />
         <Cta />
-        <!-- contoh pakai button -->
-         <div class="mt-12 flex gap-4">
-            <Button
-                href="/contact"
-                size="lg"
-                variant="destructive"
-            >Get Started Destructive</Button>
-            <Button
-                href="/contact"
-                size="lg"
-                variant="default"
-            >Get Started Default</Button>
-            <Button
-                href="/contact"
-                size="lg"
-                variant="ghost"
-            >Get Started Ghost</Button>
-            <Button
-                href="/contact"
-                size="lg"
-                variant="outline"
-            >Get Started Outline</Button>
-         </div>
     </Container>
 </PageLayout>
