@@ -1,0 +1,12 @@
+dist
+node_modules
+.astro
+package-lock.json
+.editorconfig
+biome.json
+.env.example
+.gitignore
+*.config.js
+*.config.mjs
+eslint.config.mjs
+prettier.config.js

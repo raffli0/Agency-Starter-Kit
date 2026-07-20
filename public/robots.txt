@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://agency-starter-kit.example.com/sitemap-index.xml

@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import PageLayout from "../../layouts/PageLayout.astro";
+import Container from "../../components/ui/Container.astro";
+import PostCard from "../../components/cards/PostCard.astro";
+import Cta from "../../components/sections/Cta.astro";
+
+const entries: CollectionEntry<"blog">[] = await getCollection(
+    "blog",
+    ({ data }: { data: { draft?: boolean } }) => !data.draft,
+);
+const posts = entries
+    .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+    .map((entry) => ({
+        title: entry.data.title,
+        description: entry.data.description,
+        slug: entry.id,
+        publishedAt: entry.data.publishedAt,
+        author: entry.data.author,
+        tags: entry.data.tags,
+        cover: entry.data.cover,
+    }));
+---
+
+<PageLayout title="Blog" description="Articles on design, engineering, and agency growth.">
+    <Container class="py-16">
+        <h1 class="text-4xl font-semibold text-white">Blog</h1>
+        <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+            Practical notes on building and growing digital products.
+        </p>
+        <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post) => <PostCard post={post} />)}
+        </div>
+        <Cta title="Build with us" description="Need help shipping your next idea? Let's talk." />
+    </Container>
+</PageLayout>

@@ -1,0 +1,21 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import type { Metadata } from "../types/metadata";
+
+interface Props {
+    meta?: Metadata;
+    title?: string;
+    description?: string;
+}
+
+const { meta = {}, title, description } = Astro.props;
+const merged: Metadata = {
+    ...meta,
+    ...(title ? { title } : {}),
+    ...(description ? { description } : {}),
+};
+---
+
+<BaseLayout meta={merged}>
+    <slot />
+</BaseLayout>

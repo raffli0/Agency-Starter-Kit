@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import PageLayout from "../../layouts/PageLayout.astro";
+import Container from "../../components/ui/Container.astro";
+import ProjectCard from "../../components/cards/ProjectCard.astro";
+import Cta from "../../components/sections/Cta.astro";
+
+const entries: CollectionEntry<"projects">[] = await getCollection("projects");
+const projects = entries.map((entry) => ({
+    ...entry.data,
+    slug: entry.id,
+}));
+---
+
+<PageLayout title="Projects" description="Selected work from recent client engagements.">
+    <Container class="py-16">
+        <h1 class="text-4xl font-semibold text-white">Projects</h1>
+        <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+            A selection of recent branding, web, and product work.
+        </p>
+        <div class="mt-10 grid gap-6 sm:grid-cols-2">
+            {projects.map((project) => <ProjectCard project={project} />)}
+        </div>
+        <Cta title="Start a project" />
+    </Container>
+</PageLayout>

@@ -1,0 +1,40 @@
+---
+import { siteConfig } from "../../config/site";
+import { seoConfig } from "../../config/seo";
+import { buildMetadata } from "../../lib/seo";
+import type { Metadata } from "../../types/metadata";
+
+interface Props {
+    meta?: Metadata;
+}
+
+const { meta = {} } = Astro.props;
+const resolved = buildMetadata(meta, Astro.url.pathname);
+const ogImage = resolved.image;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href={siteConfig.favicon} />
+<link rel="canonical" href={resolved.canonical} />
+
+<title>{resolved.title}</title>
+<meta name="description" content={resolved.description} />
+<meta name="author" content={siteConfig.author} />
+<meta name="generator" content={Astro.generator} />
+{resolved.noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<meta property="og:type" content={resolved.type} />
+<meta property="og:locale" content={seoConfig.openGraph.locale} />
+<meta property="og:site_name" content={siteConfig.name} />
+<meta property="og:title" content={resolved.title} />
+<meta property="og:description" content={resolved.description} />
+<meta property="og:url" content={resolved.canonical} />
+<meta property="og:image" content={ogImage} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={resolved.title} />
+<meta name="twitter:description" content={resolved.description} />
+<meta name="twitter:image" content={ogImage} />
+
+<link rel="sitemap" href="/sitemap-index.xml" />

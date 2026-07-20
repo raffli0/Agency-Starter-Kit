@@ -1,0 +1,25 @@
+---
+import type { TimelineEntry } from "../../types/timeline";
+
+interface Props {
+    title?: string;
+    entries: TimelineEntry[];
+}
+
+const { title = "Our journey", entries } = Astro.props;
+---
+
+<section class="mt-16">
+    <h2 class="text-2xl font-semibold text-white">{title}</h2>
+    <ol class="mt-6 space-y-6 border-l border-slate-800 pl-6">
+        {
+            entries.map((entry) => (
+                <li>
+                    <p class="text-sm font-semibold text-sky-400">{entry.year}</p>
+                    <h3 class="mt-1 text-lg font-semibold text-white">{entry.title}</h3>
+                    <p class="mt-2 text-sm text-slate-400">{entry.description}</p>
+                </li>
+            ))
+        }
+    </ol>
+</section>

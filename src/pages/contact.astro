@@ -1,0 +1,82 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import Container from "../components/ui/Container.astro";
+import Cta from "../components/sections/Cta.astro";
+import { contactConfig } from "../config/contact";
+import { formatPhone } from "../lib/format";
+
+const { email, phone, address, businessHours } = contactConfig;
+---
+
+<PageLayout title="Contact" description="Get in touch with our team to start your project.">
+    <Container class="py-16">
+        <h1 class="text-4xl font-semibold text-white">Contact</h1>
+        <p class="mt-6 text-lg leading-8 text-slate-300">
+            Tell us about your project and we'll get back to you within two business days.
+        </p>
+
+        <div class="mt-10 grid gap-6 md:grid-cols-2">
+            <div
+                class="rounded-3xl border border-slate-800 bg-slate-900/80 p-8 shadow-xl shadow-slate-950/20"
+            >
+                <dl class="space-y-4 text-slate-300">
+                    <div>
+                        <dt class="font-semibold text-white">Email</dt>
+                        <dd class="mt-1">
+                            <a href={`mailto:${email}`} class="text-sky-300 hover:text-sky-200"
+                                >{email}</a
+                            >
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-white">Phone</dt>
+                        <dd class="mt-1">
+                            <a
+                                href={`tel:${formatPhone(phone)}`}
+                                class="text-sky-300 hover:text-sky-200">{phone}</a
+                            >
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-white">Address</dt>
+                        <dd class="mt-1 text-sm">
+                            {address.line1}<br />
+                            {address.city}, {address.country}
+                            {address.postalCode}
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="font-semibold text-white">Hours</dt>
+                        <dd class="mt-1 space-y-1 text-sm">
+                            {
+                                businessHours.map((h) => (
+                                    <div>
+                                        {h.days}: {h.hours}
+                                    </div>
+                                ))
+                            }
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+            <div
+                class="rounded-3xl border border-slate-800 bg-slate-900/80 p-8 shadow-xl shadow-slate-950/20"
+            >
+                <p class="text-sm text-slate-400">
+                    This starter uses a placeholder contact area. Wire the form to your provider
+                    (Formspree, Resend, or a custom <code class="rounded bg-slate-800 px-2 py-1"
+                        >/api/contact</code
+                    >
+                    endpoint) before going live. The configured endpoint is
+                    <code class="rounded bg-slate-800 px-2 py-1">{contactConfig.form.endpoint}</code
+                    >.
+                </p>
+            </div>
+        </div>
+
+        <Cta
+            title="Ready to start?"
+            description="Send us a note and we'll reply within two business days."
+        />
+    </Container>
+</PageLayout>

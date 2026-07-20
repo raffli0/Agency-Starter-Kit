@@ -1,0 +1,27 @@
+---
+import type { ImageAsset } from "../../types/common";
+
+interface Props {
+    title?: string;
+    brands: ImageAsset[];
+}
+
+const { title = "Trusted by", brands } = Astro.props;
+---
+
+<section class="mt-20">
+    {
+        title && (
+            <h2 class="text-center text-sm font-semibold tracking-[0.24em] text-slate-500 uppercase">
+                {title}
+            </h2>
+        )
+    }
+    <div class="mt-6 flex flex-wrap items-center justify-center gap-8 opacity-70">
+        {
+            brands.map((brand) => (
+                <img src={brand.src} alt={brand.alt} class="h-8 w-auto" loading="lazy" />
+            ))
+        }
+    </div>
+</section>

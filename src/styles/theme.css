@@ -1,0 +1,24 @@
+:root {
+    --color-bg: #020617;
+    --color-surface: #0f172a;
+    --color-border: #1e293b;
+    --color-text: #f1f5f9;
+    --color-muted: #94a3b8;
+    --color-accent: #0ea5e9;
+    --radius: 0.75rem;
+    --container-max: 1280px;
+}
+
+html {
+    color-scheme: dark;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+
+::selection {
+    background-color: var(--color-accent);
+    color: #020617;
+}

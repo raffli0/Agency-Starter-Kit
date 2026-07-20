@@ -1,0 +1,27 @@
+---
+import "../styles/globals.css";
+import SeoHead from "../components/shared/SeoHead.astro";
+import Header from "../components/layout/Header.astro";
+import Footer from "../components/layout/Footer.astro";
+import type { Metadata } from "../types/metadata";
+
+interface Props {
+    meta?: Metadata;
+}
+
+const { meta } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <SeoHead meta={meta} />
+    </head>
+    <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+        <Header />
+        <main>
+            <slot />
+        </main>
+        <Footer />
+    </body>
+</html>

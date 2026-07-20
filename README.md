@@ -1,43 +1,47 @@
-# Astro Starter Kit: Minimal
+# Agency Starter Kit
 
-```sh
-npm create astro@latest -- --template minimal
+A fast, production-ready [Astro](https://astro.build) starter kit for agencies and creative teams.
+
+## Features
+
+- Static output with sitemap generation
+- Tailwind CSS v4 workflow
+- Content collections for blog and projects
+- Reusable layouts, sections, and UI components
+- Centralized config (`src/config`) and typed data (`src/data`)
+- SEO metadata utilities and Open Graph tags
+- Dark-mode ready theming
+
+## Getting started
+
+```bash
+npm install
+npm run dev      # start dev server
+npm run build    # production build to dist/
+npm run preview  # preview the build
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Project structure
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```
+src/
+├── components/   # ui, layout, sections, cards, navigation, feedback, animation, icons, shared
+├── layouts/      # Base, Page, Blog, Project layouts
+├── pages/        # file-based routes
+├── content/      # blog & projects collections
+├── config/       # site, seo, navigation, social, contact, analytics, features, theme
+├── data/         # typed static data (services, team, testimonials, faq, stats, timeline, pricing, brands)
+├── lib/          # seo, metadata, image, date, format, validation, constants, utils
+├── types/        # per-domain TypeScript types + barrel index
+├── constants/    # routes, metadata, animation
+└── styles/       # globals, theme, prose
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Configuration
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Edit `src/config/site.ts` and related config files to set your brand, links, and SEO defaults.
+Replace placeholder content in `src/data` and `src/content` before going live.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## License
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+MIT — see [LICENSE](./LICENSE).

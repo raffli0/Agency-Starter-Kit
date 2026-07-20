@@ -1,0 +1,26 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import Container from "../components/ui/Container.astro";
+import Team from "../components/sections/Team.astro";
+import Timeline from "../components/sections/Timeline.astro";
+import Stats from "../components/sections/Stats.astro";
+import Cta from "../components/sections/Cta.astro";
+import { siteConfig } from "../config/site";
+import { team } from "../data/team";
+import { timeline } from "../data/timeline";
+import { stats } from "../data/stats";
+---
+
+<PageLayout title="About" description="Learn about our agency, our team, and how we work.">
+    <Container class="py-16">
+        <h1 class="text-4xl font-semibold text-white">About us</h1>
+        <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+            {siteConfig.name} is a digital agency helping brands launch fast, accessible, and beautiful
+            products. We blend strategy, design, and engineering to ship work that lasts.
+        </p>
+        <Stats group={stats} />
+        <Team team={team} />
+        <Timeline entries={timeline} />
+        <Cta title="Work with us" description="Tell us about your project and we'll be in touch." />
+    </Container>
+</PageLayout>

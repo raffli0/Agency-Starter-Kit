@@ -1,0 +1,27 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import Container from "../components/ui/Container.astro";
+import Services from "../components/sections/Services.astro";
+import Pricing from "../components/sections/Pricing.astro";
+import Faq from "../components/sections/Faq.astro";
+import Cta from "../components/sections/Cta.astro";
+import { services } from "../data/services";
+import { pricing } from "../data/pricing";
+import { faq } from "../data/faq";
+---
+
+<PageLayout
+    title="Services"
+    description="Branding, web, product, and growth services for modern teams."
+>
+    <Container class="py-16">
+        <h1 class="text-4xl font-semibold text-white">Services</h1>
+        <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+            End-to-end capabilities to take your brand from idea to launch.
+        </p>
+        <Services title="Capabilities" services={services} />
+        <Pricing plans={pricing} />
+        <Faq items={faq} />
+        <Cta />
+    </Container>
+</PageLayout>

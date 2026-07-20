@@ -1,0 +1,43 @@
+---
+import type { HeroConfig } from "../../types/hero";
+
+interface Props {
+    hero: HeroConfig;
+}
+
+const { hero } = Astro.props;
+---
+
+<section class="grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:items-start">
+    <div class="space-y-6">
+        <p class="text-sm tracking-[0.28em] text-sky-400 uppercase">{hero.eyebrow}</p>
+        <h1 class="text-4xl leading-tight font-semibold text-white sm:text-5xl">{hero.heading}</h1>
+        <p class="max-w-2xl text-lg leading-8 text-slate-300">{hero.subtext}</p>
+        <div class="flex flex-wrap gap-4">
+            <a
+                href={hero.primaryAction.href}
+                class="inline-flex items-center justify-center rounded-full bg-sky-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-sky-400"
+                >{hero.primaryAction.label}</a
+            >
+            <a
+                href={hero.secondaryAction.href}
+                class="inline-flex items-center justify-center rounded-full border border-slate-700 px-5 py-3 text-sm font-semibold text-white transition hover:border-slate-500"
+                >{hero.secondaryAction.label}</a
+            >
+        </div>
+    </div>
+    <aside
+        class="rounded-3xl border border-slate-800 bg-slate-900/90 p-8 shadow-xl shadow-slate-950/20"
+    >
+        <dl class="grid grid-cols-2 gap-6">
+            {
+                hero.stats.map((stat) => (
+                    <div>
+                        <dt class="text-3xl font-semibold text-white">{stat.value}</dt>
+                        <dd class="mt-1 text-sm text-slate-400">{stat.label}</dd>
+                    </div>
+                ))
+            }
+        </dl>
+    </aside>
+</section>

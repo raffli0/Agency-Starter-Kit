@@ -1,0 +1,25 @@
+---
+import type { TeamMember } from "../../types/team";
+
+interface Props {
+    title?: string;
+    team: TeamMember[];
+}
+
+const { title = "Our team", team } = Astro.props;
+---
+
+<section class="mt-16">
+    <h2 class="text-2xl font-semibold text-white">{title}</h2>
+    <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+            team.map((member) => (
+                <article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-xl shadow-slate-950/20">
+                    <h3 class="text-lg font-semibold text-white">{member.name}</h3>
+                    <p class="mt-2 text-sm text-slate-400">{member.role}</p>
+                    {member.bio && <p class="mt-3 text-sm text-slate-500">{member.bio}</p>}
+                </article>
+            ))
+        }
+    </div>
+</section>

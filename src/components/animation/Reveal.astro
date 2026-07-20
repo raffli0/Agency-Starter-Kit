@@ -1,0 +1,15 @@
+---
+interface Props {
+    class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div
+    class={`transition duration-500 motion-reduce:transition-none ${className ?? ""}`}
+    data-reveal
+    style="opacity:0;transform:translateY(16px)"
+>
+    <slot />
+</div>

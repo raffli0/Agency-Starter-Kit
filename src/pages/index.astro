@@ -1,17 +1,39 @@
 ---
+import PageLayout from "../layouts/PageLayout.astro";
+import Hero from "../components/sections/Hero.astro";
+import Services from "../components/sections/Services.astro";
+import Testimonials from "../components/sections/Testimonials.astro";
+import Cta from "../components/sections/Cta.astro";
+import Brands from "../components/sections/Brands.astro";
+import Container from "../components/ui/Container.astro";
+import { siteConfig } from "../config/site";
+import { services } from "../data/services";
+import { testimonials } from "../data/testimonials";
+import { brands } from "../data/brands";
+import type { HeroConfig } from "../types/hero";
 
+const hero: HeroConfig = {
+    eyebrow: siteConfig.name,
+    heading: "Creative digital experiences for modern agencies.",
+    subtext:
+        "Launch a performant, accessible site with Astro, Tailwind CSS, MDX, and sitemap generation.",
+    primaryAction: { label: "Get started", href: "/contact", variant: "primary" },
+    secondaryAction: { label: "Our services", href: "/services", variant: "secondary" },
+    stats: [
+        { label: "Projects shipped", value: "120+" },
+        { label: "Happy clients", value: "60+" },
+        { label: "Performance score", value: "98" },
+        { label: "Years in business", value: "8" },
+    ],
+};
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<PageLayout title={siteConfig.title} description={siteConfig.description}>
+    <Container class="py-16">
+        <Hero hero={hero} />
+        <Services services={services} />
+        <Testimonials testimonials={testimonials} />
+        <Brands brands={brands} />
+        <Cta />
+    </Container>
+</PageLayout>

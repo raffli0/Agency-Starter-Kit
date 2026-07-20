@@ -1,0 +1,35 @@
+---
+import type { GetStaticPaths } from "astro";
+import type { CollectionEntry } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
+import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import Cta from "../../components/sections/Cta.astro";
+
+export const getStaticPaths = (async () => {
+    const entries: CollectionEntry<"projects">[] = await getCollection("projects");
+    return entries.map((entry) => ({
+        params: { slug: entry.id },
+    }));
+}) satisfies GetStaticPaths;
+
+const { slug } = Astro.params;
+const entry = await getEntry("projects", slug!);
+if (!entry) return Astro.redirect("/404");
+
+const { Content } = await render(entry);
+---
+
+<ArticleLayout title={entry.data.title} description={entry.data.description}>
+    <a href="/projects" class="text-sm text-sky-300 hover:text-sky-200">← Back to projects</a>
+    <div class="mt-6 flex items-center justify-between gap-4">
+        <h1 class="text-4xl font-semibold text-white">{entry.data.title}</h1>
+        <span class="rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-300">
+            {entry.data.category}
+        </span>
+    </div>
+    <p class="mt-3 text-slate-400">{entry.data.description}</p>
+    <article class="prose prose-invert mt-8 max-w-none">
+        <Content />
+    </article>
+    <Cta title="Have a similar project?" />
+</ArticleLayout>
