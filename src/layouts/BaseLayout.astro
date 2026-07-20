@@ -16,8 +16,17 @@ const { meta } = Astro.props;
 <html lang="en">
     <head>
         <SeoHead meta={meta} />
+        <script is:inline>
+            (function () {
+                try {
+                    var t = localStorage.getItem("theme");
+                    if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+                    if (t === "dark") document.documentElement.classList.add("dark");
+                } catch (e) {}
+            })();
+        </script>
     </head>
-    <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+    <body class="min-h-screen bg-background text-foreground antialiased">
         <Header />
         <main>
             <slot />

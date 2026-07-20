@@ -1,6 +1,7 @@
 ---
 import type { ServiceItem } from "../../types/service";
 import ServiceCard from "../cards/ServiceCard.astro";
+import Reveal from "../animation/Reveal.astro";
 
 interface Props {
     title?: string;
@@ -12,7 +13,12 @@ const { title = "What we do", services } = Astro.props;
 
 <section class="mt-20">
     <h2 class="text-2xl font-semibold text-white">{title}</h2>
-    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <Reveal animation="slide-up" stagger staggerAmount={0.1} duration={0.6}  
+    class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {services.map((service) => <ServiceCard service={service} />)}
-    </div>
+    </Reveal>
 </section>
+
+
+
+

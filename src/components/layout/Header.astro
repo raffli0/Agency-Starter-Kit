@@ -1,23 +1,131 @@
 ---
+import Container from "../ui/Container.astro";
+import Button from "../ui/button.astro";
 import { navigation } from "../../config/navigation";
 import { siteConfig } from "../../config/site";
+import { Menu, X } from "lucide-astro";
 ---
 
-<header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/80 backdrop-blur">
+<header
+    id="site-header"
+    class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/70 backdrop-blur-sm"
+>
+    <Container>
+        <div class="flex h-16 items-center justify-between gap-6">
+            <!-- Logo -->
+            <a href="/" class="group flex shrink-0 items-center gap-2 md:flex-1">
+                <span class="text-base font-bold tracking-tight transition-opacity group-hover:opacity-70">
+                    {siteConfig.name}
+                </span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden flex-1 justify-center md:flex">
+                <ul class="flex items-center gap-1" id="desktop-nav">
+                    {
+                        navigation.map((item) => (
+                            <li>
+                                <a
+                                    href={item.href}
+                                    data-href={item.href}
+                                    class="nav-link relative flex min-h-11 items-center justify-center rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors duration-150 hover:text-foreground [&.is-active]:text-foreground"
+                                >
+                                    <span class="relative z-10">{item.label}</span>
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </nav>
+
+            <!-- Right Actions -->
+            <div class="flex shrink-0 items-center justify-end gap-2 md:flex-1">
+                <!-- Hamburger -->
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    id="menu-toggle"
+                    aria-label="Toggle menu"
+                    aria-expanded="false"
+                    class="relative h-11 w-11 rounded-lg border md:hidden"
+                >
+                    <Menu class="h-4 w-4" id="icon-menu" />
+                    <X class="hidden h-4 w-4" id="icon-close" />
+                </Button>
+            </div>
+        </div>
+    </Container>
+
+    <!-- Mobile Drawer -->
     <div
-        class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4 sm:px-8 lg:px-10"
+        id="mobile-menu"
+        class="hidden overflow-hidden border-t md:hidden"
+        style="height: 0;"
     >
-        <a href="/" class="text-sm font-semibold tracking-[0.24em] text-sky-400 uppercase">
-            {siteConfig.name}
-        </a>
-        <nav class="flex flex-wrap items-center gap-6 text-sm">
-            {
-                navigation.map((item) => (
-                    <a href={item.href} class="text-slate-300 transition hover:text-white">
-                        {item.label}
-                    </a>
-                ))
-            }
-        </nav>
+        <Container>
+            <nav class="py-3">
+                <ul class="flex flex-col gap-0.5" id="mobile-nav">
+                    {
+                        navigation.map((item) => (
+                            <li>
+                                <a
+                                    href={item.href}
+                                    data-href={item.href}
+                                    class="mobile-nav-link flex min-h-11 items-center justify-center gap-3 rounded-md px-3 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground [&.is-active]:bg-accent [&.is-active]:text-foreground"
+                                >
+                                    <span class="nav-dot h-1.5 w-1.5 rounded-full bg-border transition-colors"></span>
+                                    {item.label}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </nav>
+        </Container>
     </div>
 </header>
+
+<script>
+    import { animate } from "motion";
+
+    const menuToggle = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const iconMenu = document.getElementById("icon-menu");
+    const iconClose = document.getElementById("icon-close");
+    const pathName = window.location.pathname;
+
+    // ── Active link based on current path ──
+    const links = Array.from(
+        document.querySelectorAll<HTMLAnchorElement>("[data-href]")
+    );
+    links.forEach((link) => {
+        const href = link.getAttribute("data-href") || "";
+        const active = href === pathName || (href !== "/" && pathName.startsWith(href));
+        link.classList.toggle("is-active", active);
+        const dot = link.querySelector(".nav-dot");
+        dot?.classList.toggle("bg-primary", active);
+        dot?.classList.toggle("bg-border", !active);
+    });
+
+    // ── Mobile drawer with motion ──
+    function setMenu(open: boolean) {
+        menuToggle?.setAttribute("aria-expanded", String(open));
+        iconMenu?.classList.toggle("hidden", open);
+        iconClose?.classList.toggle("hidden", !open);
+        if (!mobileMenu) return;
+        mobileMenu.classList.remove("hidden");
+        if (open) {
+            animate(mobileMenu, { height: ["0px", `${mobileMenu.scrollHeight}px`], opacity: [0, 1] }, { duration: 0.2, ease: "easeInOut" });
+        } else {
+            animate(mobileMenu, { height: ["auto", "0px"], opacity: [1, 0] }, { duration: 0.2, ease: "easeInOut" });
+        }
+    }
+    menuToggle?.addEventListener("click", () => {
+        const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+        setMenu(!isOpen);
+    });
+
+    // close drawer on navigation
+    window.addEventListener("astro:after-swap", () => setMenu(false));
+    links.forEach((l) => l.addEventListener("click", () => setMenu(false)));
+</script>

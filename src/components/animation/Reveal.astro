@@ -1,15 +1,154 @@
 ---
+type Animation = "fade" | "slide-up" | "slide-down" | "slide-left" | "slide-right" | "scale";
+
 interface Props {
+    /** HTML tag for the wrapper element */
+    as?: string;
+    /** Preset animation */
+    animation?: Animation;
+    /** Animate direct children with a stagger instead of the wrapper itself */
+    stagger?: boolean;
+    /** Delay before animation starts (seconds) */
+    delay?: number;
+    /** Duration of the animation (seconds) */
+    duration?: number;
+    /** Stagger between children (seconds, only when stagger=true) */
+    staggerAmount?: number;
+    /** Extra classes for the wrapper */
     class?: string;
 }
 
-const { class: className } = Astro.props;
+const {
+    as: Tag = "div",
+    animation = "fade",
+    stagger: useStagger = false,
+    delay = 0,
+    duration = 0.5,
+    staggerAmount = 0.1,
+    class: className = "",
+}: Props = Astro.props;
+
+const DynamicTag = Tag as any;
+
+// map preset -> css keyframe name
+const keyframe: Record<Animation, string> = {
+    fade: "reveal-fade",
+    "slide-up": "reveal-slide-up",
+    "slide-down": "reveal-slide-down",
+    "slide-left": "reveal-slide-left",
+    "slide-right": "reveal-slide-right",
+    scale: "reveal-scale",
+};
+
+const animName = keyframe[animation];
+
+// when staggering, children get the animation; otherwise the wrapper does
+const wrapperStyle = useStagger
+    ? ""
+    : `animation: ${animName} ${duration}s ease-out ${delay}s both;`;
 ---
 
-<div
-    class={`transition duration-500 motion-reduce:transition-none ${className ?? ""}`}
-    data-reveal
-    style="opacity:0;transform:translateY(16px)"
+<DynamicTag
+    class={className}
+    style={wrapperStyle}
+    data-reveal-stagger={useStagger ? "" : undefined}
+    data-duration={useStagger ? duration : undefined}
+    data-stagger-amount={useStagger ? staggerAmount : undefined}
 >
     <slot />
-</div>
+</DynamicTag>
+
+<style is:global>
+    @keyframes reveal-fade {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    @keyframes reveal-slide-up {
+        from {
+            opacity: 0;
+            transform: translateY(16px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    @keyframes reveal-slide-down {
+        from {
+            opacity: 0;
+            transform: translateY(-16px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    @keyframes reveal-slide-left {
+        from {
+            opacity: 0;
+            transform: translateX(16px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    @keyframes reveal-slide-right {
+        from {
+            opacity: 0;
+            transform: translateX(-16px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    @keyframes reveal-scale {
+        from {
+            opacity: 0;
+            transform: scale(0.96);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        [style*="reveal-"] {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+        }
+    }
+</style>
+
+{
+    useStagger && (
+        <script>
+            import { animate, stagger } from "motion";
+
+            const animateAny = animate as any;
+
+            function setup(el: HTMLElement) {
+                const duration = Number(el.dataset.duration ?? "0.5");
+                const amount = Number(el.dataset.staggerAmount ?? "0.1");
+                const items = Array.from(el.children);
+                animateAny(
+                    items,
+                    { opacity: [0, 1], y: [16, 0] },
+                    { duration, easing: "ease-out", delay: stagger(amount) }
+                );
+            }
+
+            document.querySelectorAll<HTMLElement>("[data-reveal-stagger]").forEach(setup);
+            document.addEventListener("astro:page-load", () =>
+                document.querySelectorAll<HTMLElement>("[data-reveal-stagger]").forEach(setup)
+            );
+        </script>
+    )
+}

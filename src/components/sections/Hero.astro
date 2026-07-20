@@ -1,5 +1,6 @@
 ---
 import type { HeroConfig } from "../../types/hero";
+import Reveal from "../animation/Reveal.astro";
 
 interface Props {
     hero: HeroConfig;
@@ -9,7 +10,7 @@ const { hero } = Astro.props;
 ---
 
 <section class="grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:items-start">
-    <div class="space-y-6">
+    <Reveal animation="slide-right" duration={0.5} class="space-y-6">
         <p class="text-sm tracking-[0.28em] text-sky-400 uppercase">{hero.eyebrow}</p>
         <h1 class="text-4xl leading-tight font-semibold text-white sm:text-5xl">{hero.heading}</h1>
         <p class="max-w-2xl text-lg leading-8 text-slate-300">{hero.subtext}</p>
@@ -25,19 +26,22 @@ const { hero } = Astro.props;
                 >{hero.secondaryAction.label}</a
             >
         </div>
-    </div>
-    <aside
-        class="rounded-3xl border border-slate-800 bg-slate-900/90 p-8 shadow-xl shadow-slate-950/20"
-    >
-        <dl class="grid grid-cols-2 gap-6">
-            {
-                hero.stats.map((stat) => (
-                    <div>
-                        <dt class="text-3xl font-semibold text-white">{stat.value}</dt>
-                        <dd class="mt-1 text-sm text-slate-400">{stat.label}</dd>
-                    </div>
-                ))
-            }
-        </dl>
-    </aside>
+    </Reveal>
+
+    <Reveal animation="slide-down" duration={0.5}>
+        <aside
+            class="hero-card rounded-3xl border border-slate-800 bg-slate-900/90 p-8 shadow-xl shadow-slate-950/20"
+        >
+            <dl class="grid grid-cols-2 gap-6">
+                {
+                    hero.stats.map((stat) => (
+                        <div>
+                            <dt class="text-3xl font-semibold text-white">{stat.value}</dt>
+                            <dd class="mt-1 text-sm text-slate-400">{stat.label}</dd>
+                        </div>
+                    ))
+                }
+            </dl>
+        </aside>
+    </Reveal>
 </section>
