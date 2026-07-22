@@ -5,13 +5,17 @@ import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import { fileURLToPath, URL } from 'node:url';
 
+import cloudflare from '@astrojs/cloudflare';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://agency-starter-kit.example.com',
   output: 'static',
+
   image: {
     service: { entrypoint: 'astro/assets/services/sharp' },
   },
+
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'id'],
@@ -19,9 +23,11 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+
   markdown: {
     syntaxHighlight: 'prism'
   },
+
   vite: {
     plugins: [tailwindcss()],
     resolve: {
@@ -30,6 +36,7 @@ export default defineConfig({
       }
     }
   },
+
   integrations: [sitemap({
     i18n: {
       defaultLocale: 'en',
@@ -38,5 +45,7 @@ export default defineConfig({
         id: 'id-ID',
       },
     },
-  }), mdx()]
+  }), mdx()],
+
+  adapter: cloudflare()
 });
