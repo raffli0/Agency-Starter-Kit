@@ -6,7 +6,7 @@ client: "Atlas"
 role: "Product Design"
 year: 2024
 url: https://example.com
-image: /images/projects/atlas-ecommerce.webp
+image: https://placehold.co/600x400
 featured: true
 ---
 

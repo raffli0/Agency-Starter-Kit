@@ -9,6 +9,9 @@ import { fileURLToPath, URL } from 'node:url';
 export default defineConfig({
   site: 'https://agency-starter-kit.example.com',
   output: 'static',
+  image: {
+    service: { entrypoint: 'astro/assets/services/sharp' },
+  },
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'id'],

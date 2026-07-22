@@ -37,6 +37,19 @@ const formatted = entry.data.publishedAt.toLocaleDateString("en-US", {
         class="text-xs font-medium tracking-[0.12em] text-muted-foreground uppercase transition-colors duration-150 hover:text-foreground"
         >← {t("blog.back")}</a
     >
+    {
+        entry.data.cover && (
+            <img
+                src={entry.data.cover}
+                alt=""
+                width="800"
+                height="450"
+                loading="eager"
+                decoding="async"
+                class="mt-6 aspect-video w-full rounded object-cover"
+            />
+        )
+    }
     <h1 class="mt-6 text-4xl font-semibold tracking-tight text-foreground">{entry.data.title}</h1>
     <p class="mt-4 text-xs tracking-[0.08em] text-muted-foreground uppercase">
         {formatted} · {entry.data.author}

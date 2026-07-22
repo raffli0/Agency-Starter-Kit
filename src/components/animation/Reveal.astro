@@ -130,19 +130,32 @@ const wrapperStyle = useStagger
 {
     useStagger && (
         <script>
-            import { animate, stagger } from "motion";
-
-            const animateAny = animate as any;
-
             function setup(el: HTMLElement) {
                 const duration = Number(el.dataset.duration ?? "0.5");
                 const amount = Number(el.dataset.staggerAmount ?? "0.1");
-                const items = Array.from(el.children);
-                animateAny(
-                    items,
-                    { opacity: [0, 1], y: [16, 0] },
-                    { duration, easing: "ease-out", delay: stagger(amount) }
+                const items = Array.from(el.children) as HTMLElement[];
+
+                items.forEach((child, i) => {
+                    child.style.opacity = "0";
+                    child.style.transform = "translateY(16px)";
+                    child.style.transition = `opacity ${duration}s ease-out ${i * amount}s, transform ${duration}s ease-out ${i * amount}s`;
+                });
+
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                items.forEach((child) => {
+                                    child.style.opacity = "1";
+                                    child.style.transform = "translateY(0)";
+                                });
+                                observer.unobserve(el);
+                            }
+                        });
+                    },
+                    { threshold: 0.15 }
                 );
+                observer.observe(el);
             }
 
             document.querySelectorAll<HTMLElement>("[data-reveal-stagger]").forEach(setup);

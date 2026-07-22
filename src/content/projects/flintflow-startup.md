@@ -6,7 +6,7 @@ client: "Flintflow"
 role: "Web"
 year: 2026
 url: https://example.com
-image: /images/projects/flintflow-startup.webp
+image: /images/projects/flintflow-startup.svg
 featured: true
 ---
 

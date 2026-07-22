@@ -4,7 +4,7 @@ description: "A practical checklist to rank better for client projects."
 author: "Your Name"
 publishedAt: 2025-03-10
 tags: ["seo", "marketing"]
-cover: /images/blog/seo-fundamentals-for-agencies.webp
+cover: /images/blog/seo-fundamentals-for-agencies.svg
 ---
 
 Technical SEO is the foundation. Clean semantics, fast loads, and accurate metadata get you

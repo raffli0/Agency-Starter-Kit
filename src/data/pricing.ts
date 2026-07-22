@@ -13,12 +13,12 @@ const plans = [
     {
         id: "business",
         name: "Business Website",
-        price: "$6,500",
+        price: "Rp3-5jt",
         highlighted: true,
     },
     {
-        id: "scale",
-        name: "Scale",
+        id: "custom",
+        name: "Custom System",
         price: "Custom",
         highlighted: false,
     },
@@ -36,15 +36,15 @@ const copy: Record<
             period: "one-time",
             description: "A focused landing page to validate your idea.",
             features: ["1 landing page", "Brand basics", "2 revision rounds", "2-week delivery"],
-            cta: "Get started",
+            cta: "Choose Plan",
         },
         business: {
             period: "one-time",
             description: "A full marketing site with content and SEO.",
             features: ["Up to 6 pages", "Content & SEO", "Design system", "4-week delivery"],
-            cta: "Choose Growth",
+            cta: "Choose Plan",
         },
-        scale: {
+        custom: {
             description: "Ongoing design and engineering partnership.",
             features: [
                 "Unlimited pages",
@@ -58,23 +58,17 @@ const copy: Record<
     id: {
         starter: {
             period: "sekali bayar",
-            description: "Cocok untuk UMKM yang ingin segera memiliki website.",
-            features: [
-                "1-2 Halaman",
-                "Responsif",
-                "Pengerjaan 2-5 hari",
-                "Gratis Domain",
-                "2 putaran revisi",
-            ],
-            cta: "Mulai sekarang",
+            description: "Cocok untuk UMKM, personal brand, usaha baru.",
+            features: ["1-2 Halaman", "Responsif", "Pengerjaan 2-5 hari", "Gratis Domain"],
+            cta: "Pilih Paket",
         },
         business: {
             period: "sekali bayar",
             description: "Situs marketing lengkap dengan konten dan SEO.",
             features: ["Hingga 6 halaman", "Konten & SEO", "Design system", "Pengiriman 4 minggu"],
-            cta: "Pilih Pro",
+            cta: "Pilih Paket",
         },
-        scale: {
+        custom: {
             description: "Kemitraan desain dan engineering berkelanjutan.",
             features: [
                 "Halaman tanpa batas",

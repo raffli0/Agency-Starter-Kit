@@ -17,7 +17,8 @@ const { variant = "default", size = "default", class: className, href, ...rest }
 const variants: Record<Variant, string> = {
     default: "bg-primary text-primary-foreground hover:bg-primary/90",
     destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-    outline: "border border-border bg-background hover:bg-secondary hover:text-secondary-foreground",
+    outline:
+        "border border-border bg-background hover:bg-secondary hover:text-secondary-foreground",
     secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
     ghost: "hover:bg-secondary hover:text-secondary-foreground",
     link: "text-foreground underline-offset-4 hover:underline",
@@ -34,7 +35,7 @@ const classes = cn(
     "inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap text-sm font-medium tracking-wide transition-colors duration-150 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
     variants[variant],
     sizes[size],
-    className
+    className,
 );
 ---
 

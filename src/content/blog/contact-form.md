@@ -1,11 +1,10 @@
 ---
 title: Configuring Contact Form
 description: Cntact Form That Comes with Templates
-coverImage: /images/blog/blog-02.jpg
 author: Shafiq Hammad
 publishedAt: 2025-02-02
 tags: ["design", "systems"]
-cover: /images/blog/designing-a-flexible-design-system.webp
+cover: /images/blog/blog-02.svg
 ---
 
 ## Introduction

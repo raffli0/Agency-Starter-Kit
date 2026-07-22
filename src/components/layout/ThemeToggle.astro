@@ -14,7 +14,7 @@ const t = useTranslations(locale);
 <button
     type="button"
     id="theme-toggle"
-    class="inline-flex h-9 w-9 cursor-pointer items-center justify-center border border-border text-muted-foreground transition-colors duration-150 hover:bg-secondary hover:text-foreground"
+    class="border-input text-muted-foreground hover:bg-secondary hover:text-foreground inline-flex h-9 w-9 cursor-pointer items-center justify-center border transition-colors duration-150"
     aria-label={t("nav.theme")}
     title={t("nav.theme")}
 >
@@ -31,9 +31,7 @@ const t = useTranslations(locale);
                 var stored = localStorage.getItem(STORAGE_KEY);
                 if (stored === "light" || stored === "dark") return stored;
             } catch (e) {}
-            return window.matchMedia("(prefers-color-scheme: dark)").matches
-                ? "dark"
-                : "light";
+            return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         }
 
         function applyTheme(theme) {
@@ -50,9 +48,7 @@ const t = useTranslations(locale);
         }
 
         function toggleTheme() {
-            var next = document.documentElement.classList.contains("dark")
-                ? "light"
-                : "dark";
+            var next = document.documentElement.classList.contains("dark") ? "light" : "dark";
             applyTheme(next);
         }
 

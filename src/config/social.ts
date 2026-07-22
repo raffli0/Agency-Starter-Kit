@@ -8,6 +8,7 @@ export const socialConfig: SocialLinks = {
     youtube: "https://youtube.com/your-youtube",
     tiktok: "https://tiktok.com/@your-tiktok",
     github: "https://github.com/your-github",
+    whatsapp: "https://wa.me/6281234567890",
 };
 
 export const socialLabels: Record<keyof SocialLinks, string> = {
@@ -18,4 +19,5 @@ export const socialLabels: Record<keyof SocialLinks, string> = {
     youtube: "YouTube",
     tiktok: "TikTok",
     github: "GitHub",
+    whatsapp: "WhatsApp",
 };

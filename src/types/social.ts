@@ -6,4 +6,5 @@ export interface SocialLinks {
     youtube: string;
     tiktok: string;
     github: string;
+    whatsapp: string;
 }

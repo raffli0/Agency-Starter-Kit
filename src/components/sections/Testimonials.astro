@@ -11,13 +11,13 @@ const { title = "Trusted by teams we work with", testimonials } = Astro.props;
 ---
 
 <section class="mt-20">
-    <div class="flex items-end justify-between gap-4 border-b border-border pb-4">
-        <h2 class="text-2xl font-semibold tracking-tight text-foreground">{title}</h2>
-        <span class="hidden text-xs tracking-[0.16em] text-muted-foreground uppercase sm:block">
+    <div class="border-border flex items-end justify-between gap-4 border-b pb-4">
+        <h2 class="text-foreground text-2xl font-semibold tracking-tight">{title}</h2>
+        <span class="text-muted-foreground hidden text-xs tracking-[0.16em] uppercase sm:block">
             02
         </span>
     </div>
-    <div class="mt-8 grid gap-px bg-border md:grid-cols-3">
+    <div class="bg-border-primary mt-8 grid gap-px md:grid-cols-3">
         {testimonials.map((item) => <TestimonialCard testimonial={item} />)}
     </div>
 </section>

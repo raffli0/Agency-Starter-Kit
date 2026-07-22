@@ -30,11 +30,11 @@ const posts = entries
 
 <PageLayout title={t("blog.title")} description={t("blog.description")} locale={locale}>
     <Container class="py-16">
-        <h1 class="text-4xl font-semibold tracking-tight text-foreground">{t("blog.title")}</h1>
-        <p class="mt-6 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+        <h1 class="text-foreground text-4xl font-semibold tracking-tight">{t("blog.title")}</h1>
+        <p class="text-muted-foreground mt-6 max-w-2xl text-base leading-7 sm:text-lg">
             {t("blog.intro")}
         </p>
-        <div class="mt-10 grid gap-px bg-border md:grid-cols-2 lg:grid-cols-3">
+        <div class="bg-border-primary mt-10 grid gap-px md:grid-cols-2 lg:grid-cols-3">
             {posts.map((post) => <PostCard post={post} />)}
         </div>
         <Cta

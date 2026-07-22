@@ -4,7 +4,7 @@ description: "Principles for scalable and maintainable component libraries."
 author: "Your Name"
 publishedAt: 2025-02-02
 tags: ["design", "systems"]
-cover: /images/blog/designing-a-flexible-design-system.webp
+cover: /images/blog/designing-a-flexible-design-system.svg
 ---
 
 A design system is more than a component library. It is a shared language between design and

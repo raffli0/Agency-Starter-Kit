@@ -4,7 +4,7 @@ description: "How Astro helps us ship fast, content-focused websites."
 author: "Your Name"
 publishedAt: 2025-01-15
 tags: ["astro", "performance"]
-cover: /images/blog/why-we-build-with-astro.webp
+cover: /images/blog/why-we-build-with-astro.svg
 ---
 
 Astro lets us ship static, content-focused websites without shipping a heavy JavaScript

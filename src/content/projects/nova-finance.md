@@ -6,7 +6,7 @@ client: "Flintflow"
 role: "Brand & Web"
 year: 2025
 url: https://example.com
-image: /images/projects/nova-finance.webp
+image: /images/projects/nova-finance.svg
 featured: true
 ---
 
