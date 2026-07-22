@@ -3,12 +3,15 @@ import { siteConfig } from "../../config/site";
 import { seoConfig } from "../../config/seo";
 import { buildMetadata } from "../../lib/seo";
 import type { Metadata } from "../../types/metadata";
+import { defaultLocale, localeOg, type Locale } from "../../i18n/config";
 
 interface Props {
     meta?: Metadata;
+    locale?: Locale;
+    ogLocale?: string;
 }
 
-const { meta = {} } = Astro.props;
+const { meta = {}, locale = defaultLocale, ogLocale = localeOg[locale] } = Astro.props;
 const resolved = buildMetadata(meta, Astro.url.pathname);
 const ogImage = resolved.image;
 ---
@@ -25,7 +28,7 @@ const ogImage = resolved.image;
 {resolved.noindex && <meta name="robots" content="noindex, nofollow" />}
 
 <meta property="og:type" content={resolved.type} />
-<meta property="og:locale" content={seoConfig.openGraph.locale} />
+<meta property="og:locale" content={ogLocale} />
 <meta property="og:site_name" content={siteConfig.name} />
 <meta property="og:title" content={resolved.title} />
 <meta property="og:description" content={resolved.description} />

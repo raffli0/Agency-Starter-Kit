@@ -10,30 +10,58 @@ const { title = "Pricing", plans } = Astro.props;
 ---
 
 <section class="mt-20">
-    <h2 class="text-2xl font-semibold text-white">{title}</h2>
-    <div class="mt-6 grid gap-6 md:grid-cols-3">
+    <div class="flex items-end justify-between gap-4 border-b border-border pb-4">
+        <h2 class="text-2xl font-semibold tracking-tight text-foreground">{title}</h2>
+    </div>
+    <div class="mt-8 grid gap-px bg-border md:grid-cols-3">
         {
             plans.map((plan) => (
                 <div
                     class:list={[
-                        "rounded-3xl border p-8 shadow-xl shadow-slate-950/20",
-                        plan.highlighted
-                            ? "border-sky-500 bg-slate-900"
-                            : "border-slate-800 bg-slate-900/80",
+                        "bg-card p-8",
+                        plan.highlighted && "bg-primary text-primary-foreground",
                     ]}
                 >
-                    <h3 class="text-xl font-semibold text-white">{plan.name}</h3>
-                    <p class="mt-2 text-3xl font-semibold text-white">
+                    <h3 class="text-lg font-semibold tracking-tight">{plan.name}</h3>
+                    <p class="mt-3 text-3xl font-semibold tracking-tight">
                         {plan.price}
                         {plan.period && (
-                            <span class="text-sm font-normal text-slate-400"> / {plan.period}</span>
+                            <span
+                                class:list={[
+                                    "text-sm font-normal",
+                                    plan.highlighted
+                                        ? "text-primary-foreground/60"
+                                        : "text-muted-foreground",
+                                ]}
+                            >
+                                {" "}
+                                / {plan.period}
+                            </span>
                         )}
                     </p>
-                    <p class="mt-3 text-sm text-slate-400">{plan.description}</p>
-                    <ul class="mt-4 space-y-2 text-sm text-slate-300">
+                    <p
+                        class:list={[
+                            "mt-3 text-sm leading-6",
+                            plan.highlighted
+                                ? "text-primary-foreground/70"
+                                : "text-muted-foreground",
+                        ]}
+                    >
+                        {plan.description}
+                    </p>
+                    <ul
+                        class:list={[
+                            "mt-6 space-y-2 text-sm",
+                            plan.highlighted
+                                ? "text-primary-foreground/80"
+                                : "text-muted-foreground",
+                        ]}
+                    >
                         {plan.features.map((feature) => (
                             <li class="flex gap-2">
-                                <span class="text-sky-400">✓</span>
+                                <span class={plan.highlighted ? "text-primary-foreground" : "text-brand"}>
+                                    —
+                                </span>
                                 <span>{feature}</span>
                             </li>
                         ))}
@@ -41,10 +69,10 @@ const { title = "Pricing", plans } = Astro.props;
                     <a
                         href={plan.cta.href}
                         class:list={[
-                            "mt-6 inline-flex w-full items-center justify-center rounded-full px-5 py-3 text-sm font-semibold transition",
+                            "mt-8 inline-flex w-full cursor-pointer items-center justify-center px-5 py-3 text-sm font-medium transition-colors duration-150",
                             plan.highlighted
-                                ? "bg-sky-500 text-slate-950 hover:bg-sky-400"
-                                : "border border-slate-700 text-white hover:border-slate-500",
+                                ? "bg-background text-foreground hover:opacity-90"
+                                : "border border-border text-foreground hover:bg-secondary",
                         ]}
                     >
                         {plan.cta.label}

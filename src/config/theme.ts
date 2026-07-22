@@ -1,11 +1,11 @@
 export const themeConfig = {
-    defaultTheme: "system",
+    defaultTheme: "light",
 
     enableSystem: true,
 
     disableTransitionsOnChange: true,
 
-    radius: "0.75rem",
+    radius: "0rem",
 
     container: {
         maxWidth: "1280px",

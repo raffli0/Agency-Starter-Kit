@@ -2,7 +2,7 @@
 title: "Nova Finance"
 description: "A rebrand and marketing site for a fintech startup."
 category: "Branding"
-client: "Nova Finance"
+client: "Flintflow"
 role: "Brand & Web"
 year: 2025
 url: https://example.com

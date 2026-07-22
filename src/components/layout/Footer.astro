@@ -1,28 +1,56 @@
 ---
-import { footerNavigation } from "../../config/navigation";
 import { siteConfig } from "../../config/site";
 import { formatPhone } from "../../lib/format";
+import { type Locale } from "../../i18n/config";
+import { useTranslations, localizePath } from "../../i18n/utils";
+
+interface Props {
+    locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? "en";
+const t = useTranslations(locale);
+
+const footerNavigation = [
+    {
+        title: t("footer.company"),
+        items: [
+            { label: t("nav.about"), href: localizePath("/about", locale) },
+            { label: t("nav.projects"), href: localizePath("/projects", locale) },
+            { label: t("nav.blog"), href: localizePath("/blog", locale) },
+        ],
+    },
+    {
+        title: t("footer.legal"),
+        items: [
+            { label: t("footer.privacy"), href: localizePath("/privacy-policy", locale) },
+            { label: t("footer.terms"), href: localizePath("/terms", locale) },
+        ],
+    },
+];
 ---
 
-<footer class="mt-24 border-t border-slate-800 bg-slate-950">
+<footer class="mt-24 border-t border-border bg-background">
     <div
-        class="mx-auto grid max-w-6xl gap-10 px-6 py-12 sm:grid-cols-2 sm:px-8 lg:grid-cols-3 lg:px-10"
+        class="mx-auto grid max-w-6xl gap-10 px-6 py-16 sm:grid-cols-2 sm:px-8 lg:grid-cols-3 lg:px-10"
     >
         <div>
-            <p class="text-sm font-semibold tracking-[0.24em] text-sky-400 uppercase">
+            <p class="text-xs font-semibold tracking-[0.2em] text-foreground uppercase">
                 {siteConfig.name}
             </p>
-            <p class="mt-4 max-w-sm text-sm text-slate-400">{siteConfig.description}</p>
+            <p class="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">
+                {t("site.description")}
+            </p>
             <div class="mt-6 flex flex-col gap-2 text-sm">
                 <a
                     href={`mailto:${siteConfig.email}`}
-                    class="text-slate-300 transition hover:text-white"
+                    class="text-muted-foreground transition-colors duration-150 hover:text-foreground"
                 >
                     {siteConfig.email}
                 </a>
                 <a
                     href={`tel:${formatPhone(siteConfig.phone)}`}
-                    class="text-slate-300 transition hover:text-white"
+                    class="text-muted-foreground transition-colors duration-150 hover:text-foreground"
                 >
                     {siteConfig.phone}
                 </a>
@@ -32,13 +60,15 @@ import { formatPhone } from "../../lib/format";
         {
             footerNavigation.map((section) => (
                 <div>
-                    <p class="text-sm font-semibold text-white capitalize">{section.title}</p>
+                    <p class="text-xs font-semibold tracking-[0.16em] text-foreground uppercase">
+                        {section.title}
+                    </p>
                     <ul class="mt-4 space-y-2 text-sm">
                         {section.items.map((item) => (
                             <li>
                                 <a
                                     href={item.href}
-                                    class="text-slate-400 transition hover:text-white"
+                                    class="text-muted-foreground transition-colors duration-150 hover:text-foreground"
                                 >
                                     {item.label}
                                 </a>
@@ -49,8 +79,10 @@ import { formatPhone } from "../../lib/format";
             ))
         }
     </div>
-    <div class="border-t border-slate-800">
-        <div class="mx-auto max-w-6xl px-6 py-6 text-sm text-slate-500 sm:px-8 lg:px-10">
+    <div class="border-t border-border">
+        <div
+            class="mx-auto max-w-6xl px-6 py-6 text-xs tracking-wide text-muted-foreground sm:px-8 lg:px-10"
+        >
             {siteConfig.copyright}
         </div>
     </div>

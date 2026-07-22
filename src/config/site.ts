@@ -32,7 +32,7 @@ export const siteConfig = {
         github: "https://github.com/your-github",
     },
 
-    copyright: `© ${new Date().getFullYear()} Agency Starter Kit`,
+    copyright: `© ${new Date().getFullYear()} Agency Starter Kit by Flintflow`,
 } as const;
 
 export type SiteConfig = typeof siteConfig;

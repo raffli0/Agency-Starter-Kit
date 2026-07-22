@@ -10,14 +10,22 @@ const { title = "Our team", team } = Astro.props;
 ---
 
 <section class="mt-16">
-    <h2 class="text-2xl font-semibold text-white">{title}</h2>
-    <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="flex items-end justify-between gap-4 border-b border-border pb-4">
+        <h2 class="text-2xl font-semibold tracking-tight text-foreground">{title}</h2>
+    </div>
+    <div class="mt-8 grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
         {
             team.map((member) => (
-                <article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-xl shadow-slate-950/20">
-                    <h3 class="text-lg font-semibold text-white">{member.name}</h3>
-                    <p class="mt-2 text-sm text-slate-400">{member.role}</p>
-                    {member.bio && <p class="mt-3 text-sm text-slate-500">{member.bio}</p>}
+                <article class="bg-card p-6">
+                    <h3 class="text-base font-semibold tracking-tight text-foreground">
+                        {member.name}
+                    </h3>
+                    <p class="mt-2 text-xs tracking-[0.1em] text-muted-foreground uppercase">
+                        {member.role}
+                    </p>
+                    {member.bio && (
+                        <p class="mt-3 text-sm leading-6 text-muted-foreground">{member.bio}</p>
+                    )}
                 </article>
             ))
         }

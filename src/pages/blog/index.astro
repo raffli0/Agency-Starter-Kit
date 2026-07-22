@@ -5,6 +5,11 @@ import PageLayout from "../../layouts/PageLayout.astro";
 import Container from "../../components/ui/Container.astro";
 import PostCard from "../../components/cards/PostCard.astro";
 import Cta from "../../components/sections/Cta.astro";
+import { useTranslations, localizePath } from "../../i18n/utils";
+import type { Locale } from "../../i18n/config";
+
+const locale: Locale = "en";
+const t = useTranslations(locale);
 
 const entries: CollectionEntry<"blog">[] = await getCollection(
     "blog",
@@ -23,15 +28,20 @@ const posts = entries
     }));
 ---
 
-<PageLayout title="Blog" description="Articles on design, engineering, and agency growth.">
+<PageLayout title={t("blog.title")} description={t("blog.description")} locale={locale}>
     <Container class="py-16">
-        <h1 class="text-4xl font-semibold text-white">Blog</h1>
-        <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-            Practical notes on building and growing digital products.
+        <h1 class="text-4xl font-semibold tracking-tight text-foreground">{t("blog.title")}</h1>
+        <p class="mt-6 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+            {t("blog.intro")}
         </p>
-        <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div class="mt-10 grid gap-px bg-border md:grid-cols-2 lg:grid-cols-3">
             {posts.map((post) => <PostCard post={post} />)}
         </div>
-        <Cta title="Build with us" description="Need help shipping your next idea? Let's talk." />
+        <Cta
+            title={t("blog.cta.title")}
+            description={t("blog.cta.description")}
+            ctaLabel={t("home.cta.label")}
+            ctaHref={localizePath("/contact", locale)}
+        />
     </Container>
 </PageLayout>

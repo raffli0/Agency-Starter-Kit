@@ -6,34 +6,53 @@ import Testimonials from "../components/sections/Testimonials.astro";
 import Cta from "../components/sections/Cta.astro";
 import Brands from "../components/sections/Brands.astro";
 import Container from "../components/ui/Container.astro";
-import { siteConfig } from "../config/site";
-import { services } from "../data/services";
-import { testimonials } from "../data/testimonials";
 import { brands } from "../data/brands";
+import { servicesByLocale } from "../data/services";
+import { testimonialsByLocale } from "../data/testimonials";
+import { useTranslations, localizePath } from "../i18n/utils";
 import type { HeroConfig } from "../types/hero";
+import type { Locale } from "../i18n/config";
+
+const locale: Locale = "en";
+const t = useTranslations(locale);
 
 const hero: HeroConfig = {
-    eyebrow: siteConfig.name,
-    heading: "Creative digital experiences for modern agencies.",
-    subtext:
-        "Launch a performant, accessible site with Astro, Tailwind CSS, MDX, and sitemap generation.",
-    primaryAction: { label: "Get started", href: "/contact", variant: "primary" },
-    secondaryAction: { label: "Our services", href: "/services", variant: "secondary" },
+    eyebrow: t("home.eyebrow"),
+    heading: t("home.heading"),
+    subtext: t("home.subtext"),
+    primaryAction: {
+        label: t("home.cta.primary"),
+        href: localizePath("/contact", locale),
+        variant: "primary",
+    },
+    secondaryAction: {
+        label: t("home.cta.secondary"),
+        href: localizePath("/services", locale),
+        variant: "secondary",
+    },
     stats: [
-        { label: "Projects shipped", value: "120+" },
-        { label: "Happy clients", value: "60+" },
-        { label: "Performance score", value: "98" },
-        { label: "Years in business", value: "8" },
+        { label: t("home.stat.projects"), value: "120+" },
+        { label: t("home.stat.clients"), value: "60+" },
+        { label: t("home.stat.performance"), value: "98" },
+        { label: t("home.stat.years"), value: "8" },
     ],
 };
 ---
 
-<PageLayout title={siteConfig.title} description={siteConfig.description}>
+<PageLayout title={t("site.title")} description={t("site.description")} locale={locale}>
     <Container class="py-16">
         <Hero hero={hero} />
-        <Services services={services} />
-        <Testimonials testimonials={testimonials} />
-        <Brands brands={brands} />
-        <Cta />
+        <Services title={t("home.services.title")} services={servicesByLocale(locale)} />
+        <Testimonials
+            title={t("home.testimonials.title")}
+            testimonials={testimonialsByLocale(locale)}
+        />
+        <Brands title={t("home.brands.title")} brands={brands} />
+        <Cta
+            title={t("home.cta.title")}
+            description={t("home.cta.description")}
+            ctaLabel={t("home.cta.label")}
+            ctaHref={localizePath("/contact", locale)}
+        />
     </Container>
 </PageLayout>

@@ -3,6 +3,8 @@ import type { GetStaticPaths } from "astro";
 import type { CollectionEntry } from "astro:content";
 import { getCollection, getEntry, render } from "astro:content";
 import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import { useTranslations, localizePath } from "../../i18n/utils";
+import type { Locale } from "../../i18n/config";
 
 export const getStaticPaths = (async () => {
     const entries: CollectionEntry<"blog">[] = await getCollection(
@@ -13,6 +15,9 @@ export const getStaticPaths = (async () => {
         params: { slug: entry.id },
     }));
 }) satisfies GetStaticPaths;
+
+const locale: Locale = "en";
+const t = useTranslations(locale);
 
 const { slug } = Astro.params;
 const entry = await getEntry("blog", slug!);
@@ -26,11 +31,17 @@ const formatted = entry.data.publishedAt.toLocaleDateString("en-US", {
 });
 ---
 
-<ArticleLayout title={entry.data.title} description={entry.data.description}>
-    <a href="/blog" class="text-sm text-sky-300 hover:text-sky-200">← Back to blog</a>
-    <h1 class="mt-6 text-4xl font-semibold text-white">{entry.data.title}</h1>
-    <p class="mt-4 text-sm text-slate-500">{formatted} · {entry.data.author}</p>
-    <article class="prose prose-invert mt-8 max-w-none">
+<ArticleLayout title={entry.data.title} description={entry.data.description} locale={locale}>
+    <a
+        href={localizePath("/blog", locale)}
+        class="text-xs font-medium tracking-[0.12em] text-muted-foreground uppercase transition-colors duration-150 hover:text-foreground"
+        >← {t("blog.back")}</a
+    >
+    <h1 class="mt-6 text-4xl font-semibold tracking-tight text-foreground">{entry.data.title}</h1>
+    <p class="mt-4 text-xs tracking-[0.08em] text-muted-foreground uppercase">
+        {formatted} · {entry.data.author}
+    </p>
+    <article class="prose mt-8 max-w-none">
         <Content />
     </article>
 </ArticleLayout>

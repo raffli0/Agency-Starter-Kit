@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" role="img" aria-label="Atlas">
+  <title>Atlas</title>
+  <g fill="currentColor">
+    <circle cx="14" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="2.5"/>
+    <path d="M14 8v24M2 20h24M6.5 11.5c3 3.5 4.5 7 4.5 8.5s-1.5 5-4.5 8.5M21.5 11.5c-3 3.5-4.5 7-4.5 8.5s1.5 5 4.5 8.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <text x="36" y="27" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="600" letter-spacing="-0.04em">Atlas</text>
+  </g>
+</svg>

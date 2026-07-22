@@ -1,28 +1,109 @@
 import type { PricingPlan } from "../types/pricing";
+import type { Locale } from "../i18n/config";
+import { localizePath } from "../i18n/utils";
 
-export const pricing: PricingPlan[] = [
+/** Shared fields — edit once for all languages. */
+const plans = [
     {
-        name: "Starter",
-        price: "$2,500",
-        period: "one-time",
-        description: "A focused landing page to validate your idea.",
-        features: ["1 landing page", "Brand basics", "2 revision rounds", "2-week delivery"],
-        cta: { label: "Get started", href: "/contact" },
+        id: "starter",
+        name: "Starter Website",
+        price: "Rp1-2jt",
+        highlighted: false,
     },
     {
-        name: "Growth",
+        id: "business",
+        name: "Business Website",
         price: "$6,500",
-        period: "one-time",
-        description: "A full marketing site with content and SEO.",
-        features: ["Up to 6 pages", "Content & SEO", "Design system", "4-week delivery"],
         highlighted: true,
-        cta: { label: "Choose Growth", href: "/contact" },
     },
     {
+        id: "scale",
         name: "Scale",
         price: "Custom",
-        description: "Ongoing design and engineering partnership.",
-        features: ["Unlimited pages", "Dedicated squad", "Monthly retainer", "Priority support"],
-        cta: { label: "Talk to us", href: "/contact" },
+        highlighted: false,
     },
-];
+] as const;
+
+type PlanId = (typeof plans)[number]["id"];
+
+/** Locale-only copy (period, description, features, CTA). */
+const copy: Record<
+    Locale,
+    Record<PlanId, { period?: string; description: string; features: string[]; cta: string }>
+> = {
+    en: {
+        starter: {
+            period: "one-time",
+            description: "A focused landing page to validate your idea.",
+            features: ["1 landing page", "Brand basics", "2 revision rounds", "2-week delivery"],
+            cta: "Get started",
+        },
+        business: {
+            period: "one-time",
+            description: "A full marketing site with content and SEO.",
+            features: ["Up to 6 pages", "Content & SEO", "Design system", "4-week delivery"],
+            cta: "Choose Growth",
+        },
+        scale: {
+            description: "Ongoing design and engineering partnership.",
+            features: [
+                "Unlimited pages",
+                "Dedicated squad",
+                "Monthly retainer",
+                "Priority support",
+            ],
+            cta: "Talk to us",
+        },
+    },
+    id: {
+        starter: {
+            period: "sekali bayar",
+            description: "Cocok untuk UMKM yang ingin segera memiliki website.",
+            features: [
+                "1-2 Halaman",
+                "Responsif",
+                "Pengerjaan 2-5 hari",
+                "Gratis Domain",
+                "2 putaran revisi",
+            ],
+            cta: "Mulai sekarang",
+        },
+        business: {
+            period: "sekali bayar",
+            description: "Situs marketing lengkap dengan konten dan SEO.",
+            features: ["Hingga 6 halaman", "Konten & SEO", "Design system", "Pengiriman 4 minggu"],
+            cta: "Pilih Pro",
+        },
+        scale: {
+            description: "Kemitraan desain dan engineering berkelanjutan.",
+            features: [
+                "Halaman tanpa batas",
+                "Tim khusus",
+                "Retainer bulanan",
+                "Dukungan prioritas",
+            ],
+            cta: "Konsultasi dengan kami",
+        },
+    },
+};
+
+/** Single source of truth for pricing (EN + ID). */
+export function pricingByLocale(locale: Locale): PricingPlan[] {
+    const contact = localizePath("/contact", locale);
+
+    return plans.map((plan) => {
+        const t = copy[locale][plan.id];
+        return {
+            name: plan.name,
+            price: plan.price,
+            period: t.period,
+            description: t.description,
+            features: t.features,
+            highlighted: plan.highlighted || undefined,
+            cta: { label: t.cta, href: contact },
+        };
+    });
+}
+
+/** English pricing (default / backward-compatible export). */
+export const pricing: PricingPlan[] = pricingByLocale("en");

@@ -14,14 +14,12 @@ const {
 } = Astro.props;
 ---
 
-<section
-    class="mt-20 rounded-3xl border border-slate-800 bg-slate-900/80 p-10 text-center shadow-xl shadow-slate-950/20"
->
-    <h2 class="text-3xl font-semibold text-white">{title}</h2>
-    <p class="mx-auto mt-3 max-w-xl text-slate-300">{description}</p>
+<section class="mt-20 border border-border bg-primary p-10 text-center text-primary-foreground sm:p-14">
+    <h2 class="text-3xl font-semibold tracking-tight">{title}</h2>
+    <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-primary-foreground/70">{description}</p>
     <a
         href={ctaHref}
-        class="mt-6 inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
+        class="mt-8 inline-flex cursor-pointer items-center justify-center bg-background px-6 py-3 text-sm font-medium text-foreground transition-opacity duration-150 hover:opacity-90"
         >{ctaLabel}</a
     >
 </section>

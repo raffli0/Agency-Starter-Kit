@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 40" role="img" aria-label="Pulse">
+  <title>Pulse</title>
+  <g fill="currentColor">
+    <path d="M2 20h6l3-8 4 16 4-12 3 6h8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+    <text x="42" y="27" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="600" letter-spacing="-0.04em">Pulse</text>
+  </g>
+</svg>

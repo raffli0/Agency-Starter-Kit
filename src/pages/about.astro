@@ -5,22 +5,30 @@ import Team from "../components/sections/Team.astro";
 import Timeline from "../components/sections/Timeline.astro";
 import Stats from "../components/sections/Stats.astro";
 import Cta from "../components/sections/Cta.astro";
-import { siteConfig } from "../config/site";
-import { team } from "../data/team";
-import { timeline } from "../data/timeline";
-import { stats } from "../data/stats";
+import { teamByLocale } from "../data/team";
+import { timelineByLocale } from "../data/timeline";
+import { statsByLocale } from "../data/stats";
+import { useTranslations, localizePath } from "../i18n/utils";
+import type { Locale } from "../i18n/config";
+
+const locale: Locale = "en";
+const t = useTranslations(locale);
 ---
 
-<PageLayout title="About" description="Learn about our agency, our team, and how we work.">
+<PageLayout title={t("about.title")} description={t("about.description")} locale={locale}>
     <Container class="py-16">
-        <h1 class="text-4xl font-semibold text-white">About us</h1>
-        <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-            {siteConfig.name} is a digital agency helping brands launch fast, accessible, and beautiful
-            products. We blend strategy, design, and engineering to ship work that lasts.
+        <h1 class="text-4xl font-semibold tracking-tight text-foreground">{t("about.title")}</h1>
+        <p class="mt-6 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+            {t("about.intro")}
         </p>
-        <Stats group={stats} />
-        <Team team={team} />
-        <Timeline entries={timeline} />
-        <Cta title="Work with us" description="Tell us about your project and we'll be in touch." />
+        <Stats group={statsByLocale(locale)} />
+        <Team title={t("about.team.title")} team={teamByLocale(locale)} />
+        <Timeline title={t("about.timeline.title")} entries={timelineByLocale(locale)} />
+        <Cta
+            title={t("about.cta.title")}
+            description={t("about.cta.description")}
+            ctaLabel={t("home.cta.label")}
+            ctaHref={localizePath("/contact", locale)}
+        />
     </Container>
 </PageLayout>

@@ -1,0 +1,186 @@
+{
+    "nodes": [
+        {
+            "id": "src_content_projects_nova_finance_nova_finance",
+            "label": "Flintflow",
+            "file_type": "document",
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "source_url": null,
+            "captured_at": null,
+            "author": null,
+            "contributor": null
+        },
+        {
+            "id": "src_content_projects_nova_finance_nova_finance_client",
+            "label": "Flintflow (client)",
+            "file_type": "concept",
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "source_url": null,
+            "captured_at": null,
+            "author": null,
+            "contributor": null
+        },
+        {
+            "id": "src_content_projects_nova_finance_rebrand",
+            "label": "Rebrand",
+            "file_type": "concept",
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "source_url": null,
+            "captured_at": null,
+            "author": null,
+            "contributor": null
+        },
+        {
+            "id": "src_content_projects_nova_finance_marketing_site",
+            "label": "Marketing site",
+            "file_type": "concept",
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "source_url": null,
+            "captured_at": null,
+            "author": null,
+            "contributor": null
+        },
+        {
+            "id": "src_content_projects_nova_finance_fintech_startup",
+            "label": "Fintech startup",
+            "file_type": "concept",
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "source_url": null,
+            "captured_at": null,
+            "author": null,
+            "contributor": null
+        },
+        {
+            "id": "src_content_projects_nova_finance_brand_web",
+            "label": "Brand & Web",
+            "file_type": "concept",
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "source_url": null,
+            "captured_at": null,
+            "author": null,
+            "contributor": null
+        },
+        {
+            "id": "src_content_projects_nova_finance_branding_category",
+            "label": "Branding",
+            "file_type": "concept",
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "source_url": null,
+            "captured_at": null,
+            "author": null,
+            "contributor": null
+        },
+        {
+            "id": "src_content_projects_nova_finance_plain_language_product_explainer",
+            "label": "Plain-language product explainer",
+            "file_type": "rationale",
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "source_url": null,
+            "captured_at": null,
+            "author": null,
+            "contributor": null,
+            "rationale": "Marketing site explains a complex product in plain language; identity rebuilt from the ground up."
+        }
+    ],
+    "edges": [
+        {
+            "source": "src_content_projects_nova_finance_nova_finance",
+            "target": "src_content_projects_nova_finance_nova_finance_client",
+            "relation": "references",
+            "confidence": "EXTRACTED",
+            "confidence_score": 1.0,
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "weight": 1.0
+        },
+        {
+            "source": "src_content_projects_nova_finance_nova_finance",
+            "target": "src_content_projects_nova_finance_rebrand",
+            "relation": "conceptually_related_to",
+            "confidence": "EXTRACTED",
+            "confidence_score": 1.0,
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "weight": 1.0
+        },
+        {
+            "source": "src_content_projects_nova_finance_nova_finance",
+            "target": "src_content_projects_nova_finance_marketing_site",
+            "relation": "conceptually_related_to",
+            "confidence": "EXTRACTED",
+            "confidence_score": 1.0,
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "weight": 1.0
+        },
+        {
+            "source": "src_content_projects_nova_finance_nova_finance",
+            "target": "src_content_projects_nova_finance_fintech_startup",
+            "relation": "references",
+            "confidence": "EXTRACTED",
+            "confidence_score": 1.0,
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "weight": 1.0
+        },
+        {
+            "source": "src_content_projects_nova_finance_nova_finance",
+            "target": "src_content_projects_nova_finance_brand_web",
+            "relation": "references",
+            "confidence": "EXTRACTED",
+            "confidence_score": 1.0,
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "weight": 1.0
+        },
+        {
+            "source": "src_content_projects_nova_finance_nova_finance",
+            "target": "src_content_projects_nova_finance_branding_category",
+            "relation": "references",
+            "confidence": "EXTRACTED",
+            "confidence_score": 1.0,
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "weight": 1.0
+        },
+        {
+            "source": "src_content_projects_nova_finance_rebrand",
+            "target": "src_content_projects_nova_finance_branding_category",
+            "relation": "conceptually_related_to",
+            "confidence": "INFERRED",
+            "confidence_score": 0.95,
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "weight": 1.0
+        },
+        {
+            "source": "src_content_projects_nova_finance_plain_language_product_explainer",
+            "target": "src_content_projects_nova_finance_marketing_site",
+            "relation": "rationale_for",
+            "confidence": "EXTRACTED",
+            "confidence_score": 1.0,
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "weight": 1.0
+        },
+        {
+            "source": "src_content_projects_nova_finance_nova_finance_client",
+            "target": "src_content_projects_nova_finance_fintech_startup",
+            "relation": "conceptually_related_to",
+            "confidence": "EXTRACTED",
+            "confidence_score": 1.0,
+            "source_file": "src/content/projects/nova-finance.md",
+            "source_location": null,
+            "weight": 1.0
+        }
+    ],
+    "hyperedges": []
+}

@@ -1,18 +1,21 @@
 ---
 import PageLayout from "./PageLayout.astro";
 import type { Metadata } from "../types/metadata";
+import { defaultLocale, type Locale } from "../i18n/config";
 
 interface Props {
     meta?: Metadata;
     title?: string;
     description?: string;
+    locale?: Locale;
 }
 
-const { meta = {}, title, description } = Astro.props;
+const { meta = {}, title, description, locale = defaultLocale } = Astro.props;
 ---
 
 <PageLayout
     meta={{ ...meta, ...(title ? { title } : {}), ...(description ? { description } : {}) }}
+    locale={locale}
 >
     <div class="mx-auto max-w-3xl px-6 py-16 sm:px-8 lg:px-10">
         <slot />

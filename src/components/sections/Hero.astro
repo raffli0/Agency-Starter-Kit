@@ -9,35 +9,41 @@ interface Props {
 const { hero } = Astro.props;
 ---
 
-<section class="grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:items-start">
-    <Reveal animation="slide-right" duration={0.5} class="space-y-6">
-        <p class="text-sm tracking-[0.28em] text-sky-400 uppercase">{hero.eyebrow}</p>
-        <h1 class="text-4xl leading-tight font-semibold text-white sm:text-5xl">{hero.heading}</h1>
-        <p class="max-w-2xl text-lg leading-8 text-slate-300">{hero.subtext}</p>
-        <div class="flex flex-wrap gap-4">
+<section class="border-border-primary grid gap-12 border-b pb-16 lg:grid-cols-12 lg:items-end">
+    <Reveal animation="slide-right" duration={0.5} class="space-y-6 lg:col-span-7">
+        <p class="text-brand text-xs font-medium tracking-[0.24em] uppercase">{hero.eyebrow}</p>
+        <h1
+            class="text-foreground text-4xl leading-[1.1] font-semibold tracking-tight sm:text-5xl lg:text-6xl"
+        >
+            {hero.heading}
+        </h1>
+        <p class="text-muted-foreground max-w-xl text-base leading-7 sm:text-lg">{hero.subtext}</p>
+        <div class="flex flex-wrap gap-3 pt-2">
             <a
                 href={hero.primaryAction.href}
-                class="inline-flex items-center justify-center rounded-full bg-sky-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-sky-400"
+                class="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex cursor-pointer items-center justify-center px-6 py-3 text-sm font-medium transition-colors duration-150"
                 >{hero.primaryAction.label}</a
             >
             <a
                 href={hero.secondaryAction.href}
-                class="inline-flex items-center justify-center rounded-full border border-slate-700 px-5 py-3 text-sm font-semibold text-white transition hover:border-slate-500"
+                class="border-border text-foreground hover:bg-secondary inline-flex cursor-pointer items-center justify-center border px-6 py-3 text-sm font-medium transition-colors duration-150"
                 >{hero.secondaryAction.label}</a
             >
         </div>
     </Reveal>
 
-    <Reveal animation="slide-down" duration={0.5}>
-        <aside
-            class="hero-card rounded-3xl border border-slate-800 bg-slate-900/90 p-8 shadow-xl shadow-slate-950/20"
-        >
-            <dl class="grid grid-cols-2 gap-6">
+    <Reveal animation="slide-down" duration={0.5} class="lg:col-span-5">
+        <aside class="border-border bg-card border p-8">
+            <dl class="grid grid-cols-2 gap-x-6 gap-y-8">
                 {
                     hero.stats.map((stat) => (
                         <div>
-                            <dt class="text-3xl font-semibold text-white">{stat.value}</dt>
-                            <dd class="mt-1 text-sm text-slate-400">{stat.label}</dd>
+                            <dt class="text-foreground text-3xl font-semibold tracking-tight">
+                                {stat.value}
+                            </dt>
+                            <dd class="text-muted-foreground mt-1 text-xs tracking-[0.08em] uppercase">
+                                {stat.label}
+                            </dd>
                         </div>
                     ))
                 }

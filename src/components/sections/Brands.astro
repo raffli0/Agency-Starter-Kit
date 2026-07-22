@@ -4,24 +4,248 @@ import type { ImageAsset } from "../../types/common";
 interface Props {
     title?: string;
     brands: ImageAsset[];
+    /** Scroll speed in pixels per second (true velocity). Default: 40 */
+    speed?: number;
+    /** Animation direction */
+    direction?: "left" | "right";
+    /** Pause animation when hovered */
+    pauseOnHover?: boolean;
 }
 
-const { title = "Trusted by", brands } = Astro.props;
+const {
+    title = "Trusted by",
+    brands,
+    speed = 40,
+    direction = "left",
+    pauseOnHover = true,
+} = Astro.props;
+
+// Duplicate list enough times so short brand lists still fill the viewport
+const repeats = Math.max(2, Math.ceil(8 / Math.max(brands.length, 1)));
+const track = Array.from({ length: repeats }, () => brands).flat();
 ---
 
 <section class="mt-20">
     {
         title && (
-            <h2 class="text-center text-sm font-semibold tracking-[0.24em] text-slate-500 uppercase">
+            <h2 class="text-muted-foreground text-center text-xs font-medium tracking-[0.24em] uppercase">
                 {title}
             </h2>
         )
     }
-    <div class="mt-6 flex flex-wrap items-center justify-center gap-8 opacity-70">
-        {
-            brands.map((brand) => (
-                <img src={brand.src} alt={brand.alt} class="h-8 w-auto" loading="lazy" />
-            ))
-        }
+
+    <div
+        class:list={[
+            "brands-marquee group relative mt-10 overflow-hidden",
+            pauseOnHover && "brands-marquee--pause",
+        ]}
+        style={`--marquee-speed: ${speed}; --marquee-direction: ${direction === "right" ? "reverse" : "normal"};`}
+        data-marquee
+        data-speed={speed}
+    >
+        <div class="brands-marquee__fade brands-marquee__fade--left" aria-hidden="true"></div>
+        <div class="brands-marquee__fade brands-marquee__fade--right" aria-hidden="true"></div>
+
+        <div class="brands-marquee__viewport">
+            <div class="brands-marquee__track" data-marquee-track>
+                <ul class="brands-marquee__list" data-marquee-set>
+                    {
+                        track.map((brand) => (
+                            <li class="brands-marquee__item">
+                                <span class="brands-marquee__logo">
+                                    <img
+                                        src={brand.src}
+                                        alt={brand.alt}
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
+                                </span>
+                            </li>
+                        ))
+                    }
+                </ul>
+                <ul class="brands-marquee__list" data-marquee-set aria-hidden="true">
+                    {
+                        track.map((brand) => (
+                            <li class="brands-marquee__item">
+                                <span class="brands-marquee__logo">
+                                    <img
+                                        src={brand.src}
+                                        alt=""
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
+                                </span>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </div>
     </div>
 </section>
+
+<style>
+    .brands-marquee {
+        --marquee-gap: 2.5rem;
+        --marquee-duration: 30s;
+        /* Fixed logo slot — keeps mixed aspect ratios consistent */
+        --logo-slot-w: 7.5rem;
+        --logo-slot-h: 2.75rem;
+        --logo-img-max-h: 2rem;
+    }
+
+    @media (min-width: 640px) {
+        .brands-marquee {
+            --logo-slot-w: 9rem;
+            --logo-slot-h: 3.25rem;
+            --logo-img-max-h: 2.5rem;
+            --marquee-gap: 3rem;
+        }
+    }
+
+    .brands-marquee__viewport {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .brands-marquee__track {
+        display: flex;
+        width: max-content;
+        gap: var(--marquee-gap);
+        animation: brands-marquee-scroll var(--marquee-duration) linear infinite;
+        animation-direction: var(--marquee-direction, normal);
+        will-change: transform;
+    }
+
+    .brands-marquee__list {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        gap: var(--marquee-gap);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .brands-marquee__item {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .brands-marquee__logo {
+        display: flex;
+        width: var(--logo-slot-w);
+        height: var(--logo-slot-h);
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .brands-marquee__logo img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        max-height: var(--logo-img-max-h);
+        object-fit: contain;
+        object-position: center;
+        opacity: 0.6;
+        filter: grayscale(1);
+        transition:
+            opacity 150ms ease,
+            filter 150ms ease;
+    }
+
+    .brands-marquee:hover .brands-marquee__logo img {
+        opacity: 0.85;
+    }
+
+    .brands-marquee__fade {
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        z-index: 1;
+        height: 100%;
+        width: 4rem;
+    }
+
+    .brands-marquee__fade--left {
+        left: 0;
+        background: linear-gradient(to right, var(--color-background), transparent);
+    }
+
+    .brands-marquee__fade--right {
+        right: 0;
+        background: linear-gradient(to left, var(--color-background), transparent);
+    }
+
+    .brands-marquee--pause:hover .brands-marquee__track {
+        animation-play-state: paused;
+    }
+
+    @keyframes brands-marquee-scroll {
+        from {
+            transform: translate3d(0, 0, 0);
+        }
+        to {
+            transform: translate3d(calc(-50% - var(--marquee-gap) / 2), 0, 0);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .brands-marquee__track {
+            animation: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            transform: none;
+        }
+
+        .brands-marquee__list:last-child {
+            display: none;
+        }
+
+        .brands-marquee__fade {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    function applyMarqueeSpeed(root: HTMLElement) {
+        const track = root.querySelector<HTMLElement>("[data-marquee-track]");
+        const set = root.querySelector<HTMLElement>("[data-marquee-set]");
+        if (!track || !set) return;
+
+        const speed = Number(root.dataset.speed || "40");
+        // One set width + gap equals half the full track (two identical sets)
+        const setWidth = set.getBoundingClientRect().width;
+        const styles = getComputedStyle(root);
+        const gap = parseFloat(styles.getPropertyValue("--marquee-gap")) || 56;
+        const distance = setWidth + gap;
+
+        if (distance <= 0 || speed <= 0) return;
+
+        // True speed: duration = distance(px) / speed(px/s)
+        const duration = distance / speed;
+        root.style.setProperty("--marquee-duration", `${duration}s`);
+    }
+
+    function initAll() {
+        document.querySelectorAll<HTMLElement>("[data-marquee]").forEach(applyMarqueeSpeed);
+    }
+
+    initAll();
+
+    // Recalculate after images load (width can change)
+    document.querySelectorAll<HTMLImageElement>("[data-marquee] img").forEach((img) => {
+        if (!img.complete) {
+            img.addEventListener("load", initAll, { once: true });
+        }
+    });
+
+    window.addEventListener("resize", initAll);
+    document.addEventListener("astro:page-load", initAll);
+</script>

@@ -4,6 +4,8 @@ import type { CollectionEntry } from "astro:content";
 import { getCollection, getEntry, render } from "astro:content";
 import ArticleLayout from "../../layouts/ArticleLayout.astro";
 import Cta from "../../components/sections/Cta.astro";
+import { useTranslations, localizePath } from "../../i18n/utils";
+import type { Locale } from "../../i18n/config";
 
 export const getStaticPaths = (async () => {
     const entries: CollectionEntry<"projects">[] = await getCollection("projects");
@@ -12,6 +14,9 @@ export const getStaticPaths = (async () => {
     }));
 }) satisfies GetStaticPaths;
 
+const locale: Locale = "en";
+const t = useTranslations(locale);
+
 const { slug } = Astro.params;
 const entry = await getEntry("projects", slug!);
 if (!entry) return Astro.redirect("/404");
@@ -19,17 +24,27 @@ if (!entry) return Astro.redirect("/404");
 const { Content } = await render(entry);
 ---
 
-<ArticleLayout title={entry.data.title} description={entry.data.description}>
-    <a href="/projects" class="text-sm text-sky-300 hover:text-sky-200">← Back to projects</a>
-    <div class="mt-6 flex items-center justify-between gap-4">
-        <h1 class="text-4xl font-semibold text-white">{entry.data.title}</h1>
-        <span class="rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-300">
+<ArticleLayout title={entry.data.title} description={entry.data.description} locale={locale}>
+    <a
+        href={localizePath("/projects", locale)}
+        class="text-xs font-medium tracking-[0.12em] text-muted-foreground uppercase transition-colors duration-150 hover:text-foreground"
+        >← {t("projects.back")}</a
+    >
+    <div class="mt-6 flex items-start justify-between gap-4">
+        <h1 class="text-4xl font-semibold tracking-tight text-foreground">{entry.data.title}</h1>
+        <span
+            class="shrink-0 border border-border px-2.5 py-1 text-[11px] tracking-[0.06em] text-muted-foreground uppercase"
+        >
             {entry.data.category}
         </span>
     </div>
-    <p class="mt-3 text-slate-400">{entry.data.description}</p>
-    <article class="prose prose-invert mt-8 max-w-none">
+    <p class="mt-3 text-muted-foreground">{entry.data.description}</p>
+    <article class="prose mt-8 max-w-none">
         <Content />
     </article>
-    <Cta title="Have a similar project?" />
+    <Cta
+        title={t("projects.similar")}
+        ctaLabel={t("home.cta.label")}
+        ctaHref={localizePath("/contact", locale)}
+    />
 </ArticleLayout>

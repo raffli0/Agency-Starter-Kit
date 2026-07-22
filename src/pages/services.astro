@@ -5,23 +5,30 @@ import Services from "../components/sections/Services.astro";
 import Pricing from "../components/sections/Pricing.astro";
 import Faq from "../components/sections/Faq.astro";
 import Cta from "../components/sections/Cta.astro";
-import { services } from "../data/services";
-import { pricing } from "../data/pricing";
-import { faq } from "../data/faq";
+import { servicesByLocale } from "../data/services";
+import { faqByLocale } from "../data/faq";
+import { pricingByLocale } from "../data/pricing";
+import { useTranslations, localizePath } from "../i18n/utils";
+import type { Locale } from "../i18n/config";
+
+const locale: Locale = "en";
+const t = useTranslations(locale);
 ---
 
-<PageLayout
-    title="Services"
-    description="Branding, web, product, and growth services for modern teams."
->
+<PageLayout title={t("services.title")} description={t("services.description")} locale={locale}>
     <Container class="py-16">
-        <h1 class="text-4xl font-semibold text-white">Services</h1>
-        <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-            End-to-end capabilities to take your brand from idea to launch.
+        <h1 class="text-4xl font-semibold tracking-tight text-foreground">{t("services.title")}</h1>
+        <p class="mt-6 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+            {t("services.intro")}
         </p>
-        <Services title="Capabilities" services={services} />
-        <Pricing plans={pricing} />
-        <Faq items={faq} />
-        <Cta />
+        <Services title={t("services.capabilities")} services={servicesByLocale(locale)} />
+        <Pricing title={t("services.pricing")} plans={pricingByLocale(locale)} />
+        <Faq title={t("services.faq")} items={faqByLocale(locale)} />
+        <Cta
+            title={t("home.cta.title")}
+            description={t("home.cta.description")}
+            ctaLabel={t("home.cta.label")}
+            ctaHref={localizePath("/contact", locale)}
+        />
     </Container>
 </PageLayout>

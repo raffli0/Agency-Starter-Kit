@@ -4,50 +4,68 @@ import Container from "../components/ui/Container.astro";
 import Cta from "../components/sections/Cta.astro";
 import { contactConfig } from "../config/contact";
 import { formatPhone } from "../lib/format";
+import { useTranslations, localizePath } from "../i18n/utils";
+import type { Locale } from "../i18n/config";
 
-const { email, phone, address, businessHours } = contactConfig;
+const locale: Locale = "en";
+const t = useTranslations(locale);
+const { email, phone, address } = contactConfig;
+
+const businessHours = [
+    { days: t("contact.hours.weekdays"), hours: "09:00 – 18:00" },
+    { days: t("contact.hours.saturday"), hours: "10:00 – 14:00" },
+];
 ---
 
-<PageLayout title="Contact" description="Get in touch with our team to start your project.">
+<PageLayout title={t("contact.title")} description={t("contact.description")} locale={locale}>
     <Container class="py-16">
-        <h1 class="text-4xl font-semibold text-white">Contact</h1>
-        <p class="mt-6 text-lg leading-8 text-slate-300">
-            Tell us about your project and we'll get back to you within two business days.
+        <h1 class="text-4xl font-semibold tracking-tight text-foreground">{t("contact.title")}</h1>
+        <p class="mt-6 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+            {t("contact.intro")}
         </p>
 
-        <div class="mt-10 grid gap-6 md:grid-cols-2">
-            <div
-                class="rounded-3xl border border-slate-800 bg-slate-900/80 p-8 shadow-xl shadow-slate-950/20"
-            >
-                <dl class="space-y-4 text-slate-300">
+        <div class="mt-10 grid gap-px bg-border md:grid-cols-2">
+            <div class="bg-card p-8">
+                <dl class="space-y-6 text-sm text-muted-foreground">
                     <div>
-                        <dt class="font-semibold text-white">Email</dt>
-                        <dd class="mt-1">
-                            <a href={`mailto:${email}`} class="text-sky-300 hover:text-sky-200"
+                        <dt class="text-xs font-medium tracking-[0.12em] text-foreground uppercase">
+                            {t("contact.email")}
+                        </dt>
+                        <dd class="mt-2">
+                            <a
+                                href={`mailto:${email}`}
+                                class="text-brand transition-colors duration-150 hover:text-foreground"
                                 >{email}</a
                             >
                         </dd>
                     </div>
                     <div>
-                        <dt class="font-semibold text-white">Phone</dt>
-                        <dd class="mt-1">
+                        <dt class="text-xs font-medium tracking-[0.12em] text-foreground uppercase">
+                            {t("contact.phone")}
+                        </dt>
+                        <dd class="mt-2">
                             <a
                                 href={`tel:${formatPhone(phone)}`}
-                                class="text-sky-300 hover:text-sky-200">{phone}</a
+                                class="text-brand transition-colors duration-150 hover:text-foreground"
+                                >{phone}</a
                             >
                         </dd>
                     </div>
                     <div>
-                        <dt class="font-semibold text-white">Address</dt>
-                        <dd class="mt-1 text-sm">
+                        <dt class="text-xs font-medium tracking-[0.12em] text-foreground uppercase">
+                            {t("contact.address")}
+                        </dt>
+                        <dd class="mt-2">
                             {address.line1}<br />
                             {address.city}, {address.country}
                             {address.postalCode}
                         </dd>
                     </div>
                     <div>
-                        <dt class="font-semibold text-white">Hours</dt>
-                        <dd class="mt-1 space-y-1 text-sm">
+                        <dt class="text-xs font-medium tracking-[0.12em] text-foreground uppercase">
+                            {t("contact.hours")}
+                        </dt>
+                        <dd class="mt-2 space-y-1">
                             {
                                 businessHours.map((h) => (
                                     <div>
@@ -59,24 +77,21 @@ const { email, phone, address, businessHours } = contactConfig;
                     </div>
                 </dl>
             </div>
-            <div
-                class="rounded-3xl border border-slate-800 bg-slate-900/80 p-8 shadow-xl shadow-slate-950/20"
-            >
-                <p class="text-sm text-slate-400">
-                    This starter uses a placeholder contact area. Wire the form to your provider
-                    (Formspree, Resend, or a custom <code class="rounded bg-slate-800 px-2 py-1"
-                        >/api/contact</code
-                    >
-                    endpoint) before going live. The configured endpoint is
-                    <code class="rounded bg-slate-800 px-2 py-1">{contactConfig.form.endpoint}</code
-                    >.
+            <div class="bg-card p-8">
+                <p class="text-sm leading-6 text-muted-foreground">
+                    {t("contact.form.note")}
+                    <code class="border border-border bg-muted px-1.5 py-0.5 text-foreground">
+                        {contactConfig.form.endpoint}
+                    </code>.
                 </p>
             </div>
         </div>
 
         <Cta
-            title="Ready to start?"
-            description="Send us a note and we'll reply within two business days."
+            title={t("contact.cta.title")}
+            description={t("contact.cta.description")}
+            ctaLabel={t("home.cta.label")}
+            ctaHref={localizePath("/contact", locale)}
         />
     </Container>
 </PageLayout>

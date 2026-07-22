@@ -9,6 +9,13 @@ import { fileURLToPath, URL } from 'node:url';
 export default defineConfig({
   site: 'https://agency-starter-kit.example.com',
   output: 'static',
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'id'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   markdown: {
     syntaxHighlight: 'prism'
   },
@@ -20,5 +27,13 @@ export default defineConfig({
       }
     }
   },
-  integrations: [sitemap(), mdx()]
+  integrations: [sitemap({
+    i18n: {
+      defaultLocale: 'en',
+      locales: {
+        en: 'en-US',
+        id: 'id-ID',
+      },
+    },
+  }), mdx()]
 });

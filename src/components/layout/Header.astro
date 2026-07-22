@@ -1,34 +1,53 @@
 ---
 import Container from "../ui/Container.astro";
 import Button from "../ui/button.astro";
-import { navigation } from "../../config/navigation";
+import LanguageToggle from "./LanguageToggle.astro";
+import ThemeToggle from "./ThemeToggle.astro";
 import { siteConfig } from "../../config/site";
+import { type Locale } from "../../i18n/config";
+import { useTranslations, localizePath } from "../../i18n/utils";
 import { Menu, X } from "lucide-astro";
+
+interface Props {
+    locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? "en";
+const t = useTranslations(locale);
+
+const navigation = [
+    { label: t("nav.home"), href: localizePath("/", locale) },
+    { label: t("nav.about"), href: localizePath("/about", locale) },
+    { label: t("nav.services"), href: localizePath("/services", locale) },
+    { label: t("nav.projects"), href: localizePath("/projects", locale) },
+    { label: t("nav.blog"), href: localizePath("/blog", locale) },
+    { label: t("nav.contact"), href: localizePath("/contact", locale) },
+];
 ---
 
 <header
     id="site-header"
-    class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/70 backdrop-blur-sm"
+    class="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-sm"
 >
     <Container>
         <div class="flex h-16 items-center justify-between gap-6">
-            <!-- Logo -->
-            <a href="/" class="group flex shrink-0 items-center gap-2 md:flex-1">
-                <span class="text-base font-bold tracking-tight transition-opacity group-hover:opacity-70">
+            <a href={localizePath("/", locale)} class="group flex shrink-0 items-center gap-2 md:flex-1">
+                <span
+                    class="text-sm font-semibold tracking-tight uppercase transition-opacity group-hover:opacity-60"
+                >
                     {siteConfig.name}
                 </span>
             </a>
 
-            <!-- Desktop Nav -->
             <nav class="hidden flex-1 justify-center md:flex">
-                <ul class="flex items-center gap-1" id="desktop-nav">
+                <ul class="flex items-center gap-0" id="desktop-nav">
                     {
                         navigation.map((item) => (
                             <li>
                                 <a
                                     href={item.href}
                                     data-href={item.href}
-                                    class="nav-link relative flex min-h-11 items-center justify-center rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors duration-150 hover:text-foreground [&.is-active]:text-foreground"
+                                    class="nav-link relative flex min-h-11 items-center justify-center px-4 py-2 text-xs font-medium tracking-[0.12em] text-muted-foreground uppercase transition-colors duration-150 hover:text-foreground [&.is-active]:text-foreground [&.is-active]:after:absolute [&.is-active]:after:right-4 [&.is-active]:after:bottom-1 [&.is-active]:after:left-4 [&.is-active]:after:h-px [&.is-active]:after:bg-foreground"
                                 >
                                     <span class="relative z-10">{item.label}</span>
                                 </a>
@@ -38,16 +57,18 @@ import { Menu, X } from "lucide-astro";
                 </ul>
             </nav>
 
-            <!-- Right Actions -->
             <div class="flex shrink-0 items-center justify-end gap-2 md:flex-1">
-                <!-- Hamburger -->
+                <ThemeToggle locale={locale} />
+                <div class="hidden sm:block">
+                    <LanguageToggle locale={locale} />
+                </div>
                 <Button
                     variant="ghost"
                     size="icon"
                     id="menu-toggle"
-                    aria-label="Toggle menu"
+                    aria-label={t("nav.toggle")}
                     aria-expanded="false"
-                    class="relative h-11 w-11 rounded-lg border md:hidden"
+                    class="relative h-11 w-11 border border-border md:hidden"
                 >
                     <Menu class="h-4 w-4" id="icon-menu" />
                     <X class="hidden h-4 w-4" id="icon-close" />
@@ -56,10 +77,9 @@ import { Menu, X } from "lucide-astro";
         </div>
     </Container>
 
-    <!-- Mobile Drawer -->
     <div
         id="mobile-menu"
-        class="hidden overflow-hidden border-t md:hidden"
+        class="hidden overflow-hidden border-t border-border md:hidden"
         style="height: 0;"
     >
         <Container>
@@ -71,15 +91,18 @@ import { Menu, X } from "lucide-astro";
                                 <a
                                     href={item.href}
                                     data-href={item.href}
-                                    class="mobile-nav-link flex min-h-11 items-center justify-center gap-3 rounded-md px-3 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground [&.is-active]:bg-accent [&.is-active]:text-foreground"
+                                    class="mobile-nav-link flex min-h-11 items-center gap-3 px-1 py-3 text-xs font-medium tracking-[0.12em] text-muted-foreground uppercase transition-colors hover:text-foreground [&.is-active]:text-foreground"
                                 >
-                                    <span class="nav-dot h-1.5 w-1.5 rounded-full bg-border transition-colors"></span>
+                                    <span class="nav-dot h-1 w-1 bg-border transition-colors"></span>
                                     {item.label}
                                 </a>
                             </li>
                         ))
                     }
                 </ul>
+                <div class="flex items-center gap-3 border-t border-border py-4 sm:hidden">
+                    <LanguageToggle locale={locale} />
+                </div>
             </nav>
         </Container>
     </div>
@@ -94,20 +117,20 @@ import { Menu, X } from "lucide-astro";
     const iconClose = document.getElementById("icon-close");
     const pathName = window.location.pathname;
 
-    // ── Active link based on current path ──
     const links = Array.from(
         document.querySelectorAll<HTMLAnchorElement>("[data-href]")
     );
     links.forEach((link) => {
         const href = link.getAttribute("data-href") || "";
-        const active = href === pathName || (href !== "/" && pathName.startsWith(href));
+        const active =
+            href === pathName ||
+            (href !== "/" && href !== "/id" && pathName.startsWith(href));
         link.classList.toggle("is-active", active);
         const dot = link.querySelector(".nav-dot");
-        dot?.classList.toggle("bg-primary", active);
+        dot?.classList.toggle("bg-foreground", active);
         dot?.classList.toggle("bg-border", !active);
     });
 
-    // ── Mobile drawer with motion ──
     function setMenu(open: boolean) {
         menuToggle?.setAttribute("aria-expanded", String(open));
         iconMenu?.classList.toggle("hidden", open);
@@ -115,9 +138,17 @@ import { Menu, X } from "lucide-astro";
         if (!mobileMenu) return;
         mobileMenu.classList.remove("hidden");
         if (open) {
-            animate(mobileMenu, { height: ["0px", `${mobileMenu.scrollHeight}px`], opacity: [0, 1] }, { duration: 0.2, ease: "easeInOut" });
+            animate(
+                mobileMenu,
+                { height: ["0px", `${mobileMenu.scrollHeight}px`], opacity: [0, 1] },
+                { duration: 0.2, ease: "easeInOut" }
+            );
         } else {
-            animate(mobileMenu, { height: ["auto", "0px"], opacity: [1, 0] }, { duration: 0.2, ease: "easeInOut" });
+            animate(
+                mobileMenu,
+                { height: ["auto", "0px"], opacity: [1, 0] },
+                { duration: 0.2, ease: "easeInOut" }
+            );
         }
     }
     menuToggle?.addEventListener("click", () => {
@@ -125,7 +156,6 @@ import { Menu, X } from "lucide-astro";
         setMenu(!isOpen);
     });
 
-    // close drawer on navigation
     window.addEventListener("astro:after-swap", () => setMenu(false));
     links.forEach((l) => l.addEventListener("click", () => setMenu(false)));
 </script>

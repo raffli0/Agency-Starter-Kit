@@ -5,6 +5,11 @@ import PageLayout from "../../layouts/PageLayout.astro";
 import Container from "../../components/ui/Container.astro";
 import ProjectCard from "../../components/cards/ProjectCard.astro";
 import Cta from "../../components/sections/Cta.astro";
+import { useTranslations, localizePath } from "../../i18n/utils";
+import type { Locale } from "../../i18n/config";
+
+const locale: Locale = "en";
+const t = useTranslations(locale);
 
 const entries: CollectionEntry<"projects">[] = await getCollection("projects");
 const projects = entries.map((entry) => ({
@@ -13,15 +18,19 @@ const projects = entries.map((entry) => ({
 }));
 ---
 
-<PageLayout title="Projects" description="Selected work from recent client engagements.">
+<PageLayout title={t("projects.title")} description={t("projects.description")} locale={locale}>
     <Container class="py-16">
-        <h1 class="text-4xl font-semibold text-white">Projects</h1>
-        <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-            A selection of recent branding, web, and product work.
+        <h1 class="text-4xl font-semibold tracking-tight text-foreground">{t("projects.title")}</h1>
+        <p class="mt-6 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+            {t("projects.intro")}
         </p>
-        <div class="mt-10 grid gap-6 sm:grid-cols-2">
+        <div class="mt-10 grid gap-px bg-border sm:grid-cols-2">
             {projects.map((project) => <ProjectCard project={project} />)}
         </div>
-        <Cta title="Start a project" />
+        <Cta
+            title={t("projects.cta")}
+            ctaLabel={t("home.cta.label")}
+            ctaHref={localizePath("/contact", locale)}
+        />
     </Container>
 </PageLayout>
