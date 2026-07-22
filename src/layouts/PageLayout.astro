@@ -1,0 +1,23 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import type { Metadata } from "../types/metadata";
+import { defaultLocale, type Locale } from "../i18n/config";
+
+interface Props {
+    meta?: Metadata;
+    title?: string;
+    description?: string;
+    locale?: Locale;
+}
+
+const { meta = {}, title, description, locale = defaultLocale } = Astro.props;
+const merged: Metadata = {
+    ...meta,
+    ...(title ? { title } : {}),
+    ...(description ? { description } : {}),
+};
+---
+
+<BaseLayout meta={merged} locale={locale}>
+    <slot />
+</BaseLayout>

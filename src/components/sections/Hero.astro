@@ -1,0 +1,53 @@
+---
+import type { HeroConfig } from "../../types/hero";
+import Reveal from "../animation/Reveal.astro";
+
+interface Props {
+    hero: HeroConfig;
+}
+
+const { hero } = Astro.props;
+---
+
+<section class="border-border grid gap-12 border-b pb-16 lg:grid-cols-12 lg:items-end">
+    <Reveal animation="slide-right" duration={0.5} class="space-y-6 lg:col-span-7">
+        <p class="text-brand text-xs font-medium tracking-[0.24em] uppercase">{hero.eyebrow}</p>
+        <h1
+            class="text-foreground text-4xl leading-[1.1] font-semibold tracking-tight sm:text-5xl lg:text-6xl"
+        >
+            {hero.heading}
+        </h1>
+        <p class="text-muted-foreground max-w-xl text-base leading-7 sm:text-lg">{hero.subtext}</p>
+        <div class="flex flex-wrap gap-3 pt-2">
+            <a
+                href={hero.primaryAction.href}
+                class="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex cursor-pointer items-center justify-center px-6 py-3 text-sm font-medium transition-colors duration-150"
+                >{hero.primaryAction.label}</a
+            >
+            <a
+                href={hero.secondaryAction.href}
+                class="border-border text-foreground hover:bg-secondary inline-flex cursor-pointer items-center justify-center border px-6 py-3 text-sm font-medium transition-colors duration-150"
+                >{hero.secondaryAction.label}</a
+            >
+        </div>
+    </Reveal>
+
+    <Reveal animation="slide-down" duration={0.5} class="lg:col-span-5">
+        <aside class="border-border-primary bg-card border p-8">
+            <dl class="grid grid-cols-2 gap-x-6 gap-y-8">
+                {
+                    hero.stats.map((stat) => (
+                        <div>
+                            <dt class="text-foreground text-3xl font-semibold tracking-tight">
+                                {stat.value}
+                            </dt>
+                            <dd class="text-muted-foreground mt-1 text-xs tracking-[0.08em] uppercase">
+                                {stat.label}
+                            </dd>
+                        </div>
+                    ))
+                }
+            </dl>
+        </aside>
+    </Reveal>
+</section>

@@ -1,0 +1,18 @@
+---
+interface Props {
+    variant?: "info" | "success" | "warning" | "error";
+    class?: string;
+}
+
+const { variant = "info", class: className } = Astro.props;
+const variants = {
+    info: "border-brand/30 bg-brand/5 text-foreground",
+    success: "border-emerald-600/30 bg-emerald-50 text-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200",
+    warning: "border-amber-600/30 bg-amber-50 text-amber-900 dark:bg-amber-950/40 dark:text-amber-200",
+    error: "border-destructive/30 bg-destructive/5 text-destructive",
+};
+---
+
+<div role="alert" class={`border p-4 text-sm ${variants[variant]} ${className ?? ""}`}>
+    <slot />
+</div>

@@ -1,0 +1,40 @@
+---
+import type { BlogPost } from "../../types/blog";
+import { formatDate } from "../../lib/date";
+import { getLangFromUrl, localizePath } from "../../i18n/utils";
+
+interface Props {
+    post: BlogPost & { publishedAt: string | Date };
+}
+
+const { post } = Astro.props;
+const locale = getLangFromUrl(Astro.url);
+const href = localizePath(`/blog/${post.slug}`, locale);
+const dateLocale = locale === "id" ? "id-ID" : "en-US";
+---
+
+<a
+    href={href}
+    class="border-border-primary bg-card hover:border-foreground/20 block border p-0 transition-colors duration-150"
+>
+    {
+        post.cover && (
+            <img
+                src={post.cover}
+                alt=""
+                width="600"
+                height="315"
+                loading="lazy"
+                decoding="async"
+                class="aspect-video w-full object-cover"
+            />
+        )
+    }
+    <div class="p-6">
+        <h2 class="text-foreground text-base font-semibold tracking-tight">{post.title}</h2>
+        <p class="text-muted-foreground mt-3 text-sm leading-6">{post.description}</p>
+        <p class="text-muted-foreground mt-4 text-xs tracking-[0.08em] uppercase">
+            {formatDate(post.publishedAt, dateLocale)}
+        </p>
+    </div>
+</a>

@@ -1,0 +1,66 @@
+---
+import { Moon, Sun } from "lucide-astro";
+import type { Locale } from "../../i18n/config";
+import { useTranslations } from "../../i18n/utils";
+
+interface Props {
+    locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? "en";
+const t = useTranslations(locale);
+---
+
+<button
+    type="button"
+    id="theme-toggle"
+    class="border-input text-muted-foreground hover:bg-secondary hover:text-foreground inline-flex h-9 w-9 cursor-pointer items-center justify-center border transition-colors duration-150"
+    aria-label={t("nav.theme")}
+    title={t("nav.theme")}
+>
+    <Sun class="h-4 w-4 dark:hidden" aria-hidden="true" />
+    <Moon class="hidden h-4 w-4 dark:block" aria-hidden="true" />
+</button>
+
+<script is:inline>
+    (function () {
+        var STORAGE_KEY = "theme";
+
+        function getPreferred() {
+            try {
+                var stored = localStorage.getItem(STORAGE_KEY);
+                if (stored === "light" || stored === "dark") return stored;
+            } catch (e) {}
+            return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+
+        function applyTheme(theme) {
+            var root = document.documentElement;
+            if (theme === "dark") {
+                root.classList.add("dark");
+            } else {
+                root.classList.remove("dark");
+            }
+            root.style.colorScheme = theme;
+            try {
+                localStorage.setItem(STORAGE_KEY, theme);
+            } catch (e) {}
+        }
+
+        function toggleTheme() {
+            var next = document.documentElement.classList.contains("dark") ? "light" : "dark";
+            applyTheme(next);
+        }
+
+        function bind() {
+            var btn = document.getElementById("theme-toggle");
+            if (!btn || btn.dataset.bound === "1") return;
+            btn.dataset.bound = "1";
+            btn.addEventListener("click", toggleTheme);
+        }
+
+        applyTheme(getPreferred());
+        bind();
+        document.addEventListener("astro:page-load", bind);
+    })();
+</script>

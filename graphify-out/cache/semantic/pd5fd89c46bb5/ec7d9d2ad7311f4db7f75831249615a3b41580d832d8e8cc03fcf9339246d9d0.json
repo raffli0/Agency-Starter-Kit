@@ -1,0 +1,180 @@
+{
+    "nodes": [
+        {
+            "id": "src_content_projects_lumen_studio_lumen_studio",
+            "label": "Fakie",
+            "file_type": "document",
+            "source_file": "src/content/projects/lumen-studio.md",
+            "source_location": null,
+            "source_url": null,
+            "captured_at": null,
+            "author": null,
+            "contributor": null
+        },
+        {
+            "id": "src_content_projects_lumen_studio_lumen_studio_client",
+            "label": "Fakie (client)",
+            "file_type": "concept",
+            "source_file": "src/content/projects/lumen-studio.md",
+            "source_location": null,
+            "source_url": null,
+            "captured_at": null,
+            "author": null,
+            "contributor": null
+        },
+        {
+            "id": "src_content_projects_lumen_studio_portfolio_booking_platform",
+            "label": "Portfolio and booking platform",
+            "file_type": "concept",
+            "source_file": "src/content/projects/lumen-studio.md",
+            "source_location": null,
+            "source_url": null,
+            "captured_at": null,
+            "author": null,
+            "contributor": null
+        },
+        {
+            "id": "src_content_projects_lumen_studio_web_cms",
+            "label": "Web & CMS",
+            "file_type": "concept",
+            "source_file": "src/content/projects/lumen-studio.md",
+            "source_location": null,
+            "source_url": null,
+            "captured_at": null,
+            "author": null,
+            "contributor": null
+        },
+        {
+            "id": "src_content_projects_lumen_studio_web_category",
+            "label": "Web",
+            "file_type": "concept",
+            "source_file": "src/content/projects/lumen-studio.md",
+            "source_location": null,
+            "source_url": null,
+            "captured_at": null,
+            "author": null,
+            "contributor": null
+        },
+        {
+            "id": "src_content_projects_lumen_studio_lightweight_booking_flow",
+            "label": "Lightweight booking flow",
+            "file_type": "concept",
+            "source_file": "src/content/projects/lumen-studio.md",
+            "source_location": null,
+            "source_url": null,
+            "captured_at": null,
+            "author": null,
+            "contributor": null
+        }
+    ],
+    "edges": [
+        {
+            "source": "src_content_projects_lumen_studio_lumen_studio",
+            "target": "src_content_projects_lumen_studio_lumen_studio_client",
+            "relation": "references",
+            "confidence": "EXTRACTED",
+            "confidence_score": 1.0,
+            "source_file": "src/content/projects/lumen-studio.md",
+            "source_location": null,
+            "weight": 1.0
+        },
+        {
+            "source": "src_content_projects_lumen_studio_lumen_studio",
+            "target": "src_content_projects_lumen_studio_portfolio_booking_platform",
+            "relation": "conceptually_related_to",
+            "confidence": "EXTRACTED",
+            "confidence_score": 1.0,
+            "source_file": "src/content/projects/lumen-studio.md",
+            "source_location": null,
+            "weight": 1.0
+        },
+        {
+            "source": "src_content_projects_lumen_studio_lumen_studio",
+            "target": "src_content_projects_lumen_studio_web_cms",
+            "relation": "references",
+            "confidence": "EXTRACTED",
+            "confidence_score": 1.0,
+            "source_file": "src/content/projects/lumen-studio.md",
+            "source_location": null,
+            "weight": 1.0
+        },
+        {
+            "source": "src_content_projects_lumen_studio_lumen_studio",
+            "target": "src_content_projects_lumen_studio_web_category",
+            "relation": "references",
+            "confidence": "EXTRACTED",
+            "confidence_score": 1.0,
+            "source_file": "src/content/projects/lumen-studio.md",
+            "source_location": null,
+            "weight": 1.0
+        },
+        {
+            "source": "src_content_projects_lumen_studio_lumen_studio",
+            "target": "src_content_projects_lumen_studio_lightweight_booking_flow",
+            "relation": "conceptually_related_to",
+            "confidence": "EXTRACTED",
+            "confidence_score": 1.0,
+            "source_file": "src/content/projects/lumen-studio.md",
+            "source_location": null,
+            "weight": 1.0
+        },
+        {
+            "source": "src_content_projects_lumen_studio_portfolio_booking_platform",
+            "target": "src_content_projects_lumen_studio_lightweight_booking_flow",
+            "relation": "shares_data_with",
+            "confidence": "INFERRED",
+            "confidence_score": 0.85,
+            "source_file": "src/content/projects/lumen-studio.md",
+            "source_location": null,
+            "weight": 1.0
+        },
+        {
+            "source": "src_content_projects_lumen_studio_web_cms",
+            "target": "src_content_projects_lumen_studio_lightweight_booking_flow",
+            "relation": "conceptually_related_to",
+            "confidence": "INFERRED",
+            "confidence_score": 0.75,
+            "source_file": "src/content/projects/lumen-studio.md",
+            "source_location": null,
+            "weight": 1.0
+        },
+        {
+            "source": "src_content_projects_lumen_studio_portfolio_booking_platform",
+            "target": "src_content_projects_nova_finance_marketing_site",
+            "relation": "semantically_similar_to",
+            "confidence": "INFERRED",
+            "confidence_score": 0.55,
+            "source_file": "src/content/projects/lumen-studio.md",
+            "source_location": null,
+            "weight": 1.0
+        },
+        {
+            "source": "src_content_projects_lumen_studio_web_cms",
+            "target": "src_content_projects_nova_finance_brand_web",
+            "relation": "semantically_similar_to",
+            "confidence": "INFERRED",
+            "confidence_score": 0.65,
+            "source_file": "src/content/projects/lumen-studio.md",
+            "source_location": null,
+            "weight": 1.0
+        }
+    ],
+    "hyperedges": [
+        {
+            "id": "hyper_featured_2025_web_brand_projects",
+            "label": "Featured 2025 web and brand projects",
+            "nodes": [
+                "src_content_projects_lumen_studio_lumen_studio",
+                "src_content_projects_nova_finance_nova_finance",
+                "src_content_projects_lumen_studio_web_category",
+                "src_content_projects_nova_finance_branding_category"
+            ],
+            "relation": "shares_data_with",
+            "confidence": "INFERRED",
+            "confidence_score": 0.75,
+            "source_file": "src/content/projects/lumen-studio.md",
+            "source_location": null,
+            "weight": 1.0
+        }
+    ]
+}

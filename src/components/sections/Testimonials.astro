@@ -1,0 +1,23 @@
+---
+import type { Testimonial } from "../../types/testimonial";
+import TestimonialCard from "../cards/TestimonialCard.astro";
+
+interface Props {
+    title?: string;
+    testimonials: Testimonial[];
+}
+
+const { title = "Trusted by teams we work with", testimonials } = Astro.props;
+---
+
+<section class="mt-20">
+    <div class="border-border flex items-end justify-between gap-4 border-b pb-4">
+        <h2 class="text-foreground text-2xl font-semibold tracking-tight">{title}</h2>
+        <span class="text-muted-foreground hidden text-xs tracking-[0.16em] uppercase sm:block">
+            02
+        </span>
+    </div>
+    <div class="bg-border-primary mt-8 grid gap-px md:grid-cols-3">
+        {testimonials.map((item) => <TestimonialCard testimonial={item} />)}
+    </div>
+</section>

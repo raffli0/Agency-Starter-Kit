@@ -1,0 +1,67 @@
+---
+import "@fontsource-variable/inter";
+import "../styles/globals.css";
+import SeoHead from "../components/shared/SeoHead.astro";
+import Header from "../components/layout/Header.astro";
+import Footer from "../components/layout/Footer.astro";
+import WhatsAppButton from "../components/widgets/WhatsAppButton.astro";
+import type { Metadata } from "../types/metadata";
+import { defaultLocale, localeHtmlLang, localeOg, type Locale } from "../i18n/config";
+import { switchLocalePath } from "../i18n/utils";
+
+interface Props {
+    meta?: Metadata;
+    locale?: Locale;
+}
+
+const { meta, locale = defaultLocale } = Astro.props;
+const htmlLang = localeHtmlLang[locale];
+const ogLocale = localeOg[locale];
+const alternateLocales = (["en", "id"] as Locale[]).filter((l) => l !== locale);
+---
+
+<!doctype html>
+<html lang={htmlLang}>
+    <head>
+        <SeoHead meta={meta} locale={locale} ogLocale={ogLocale} />
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        {
+            alternateLocales.map((alt) => (
+                <link
+                    rel="alternate"
+                    hreflang={alt}
+                    href={new URL(switchLocalePath(Astro.url.pathname, alt), Astro.site).toString()}
+                />
+            ))
+        }
+        <link
+            rel="alternate"
+            hreflang="x-default"
+            href={new URL(switchLocalePath(Astro.url.pathname, "en"), Astro.site).toString()}
+        />
+        <script is:inline>
+            (function () {
+                try {
+                    var t = localStorage.getItem("theme");
+                    if (t !== "light" && t !== "dark") {
+                        t = window.matchMedia("(prefers-color-scheme: dark)").matches
+                            ? "dark"
+                            : "light";
+                    }
+                    if (t === "dark") document.documentElement.classList.add("dark");
+                    else document.documentElement.classList.remove("dark");
+                    document.documentElement.style.colorScheme = t;
+                } catch (e) {}
+            })();
+        </script>
+    </head>
+    <body class="bg-background text-foreground min-h-screen font-sans antialiased">
+        <Header locale={locale} />
+        <main>
+            <slot />
+        </main>
+        <Footer locale={locale} />
+        <WhatsAppButton />
+    </body>
+</html>

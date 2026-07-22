@@ -1,0 +1,84 @@
+---
+import type { PricingPlan } from "../../types/pricing";
+
+interface Props {
+    title?: string;
+    plans: PricingPlan[];
+}
+
+const { title = "Pricing", plans } = Astro.props;
+---
+
+<section class="mt-20">
+    <div class="flex items-end justify-between gap-4 border-b border-border pb-4">
+        <h2 class="text-2xl font-semibold tracking-tight text-foreground">{title}</h2>
+    </div>
+    <div class="mt-8 grid gap-px bg-border md:grid-cols-3">
+        {
+            plans.map((plan) => (
+                <div
+                    class:list={[
+                        "bg-card p-8",
+                        plan.highlighted && "bg-primary text-primary-foreground",
+                    ]}
+                >
+                    <h3 class="text-lg font-semibold tracking-tight">{plan.name}</h3>
+                    <p class="mt-3 text-3xl font-semibold tracking-tight">
+                        {plan.price}
+                        {plan.period && (
+                            <span
+                                class:list={[
+                                    "text-sm font-normal",
+                                    plan.highlighted
+                                        ? "text-primary-foreground/90"
+                                        : "text-muted-foreground",
+                                ]}
+                            >
+                                {" "}
+                                / {plan.period}
+                            </span>
+                        )}
+                    </p>
+                    <p
+                        class:list={[
+                            "mt-3 text-sm leading-6",
+                            plan.highlighted
+                                ? "text-primary-foreground/90"
+                                : "text-muted-foreground",
+                        ]}
+                    >
+                        {plan.description}
+                    </p>
+                    <ul
+                        class:list={[
+                            "mt-6 space-y-2 text-sm",
+                            plan.highlighted
+                                ? "text-primary-foreground/90"
+                                : "text-muted-foreground",
+                        ]}
+                    >
+                        {plan.features.map((feature) => (
+                            <li class="flex gap-2">
+                                <span class={plan.highlighted ? "text-primary-foreground" : "text-brand"}>
+                                    —
+                                </span>
+                                <span>{feature}</span>
+                            </li>
+                        ))}
+                    </ul>
+                    <a
+                        href={plan.cta.href}
+                        class:list={[
+                            "mt-8 inline-flex w-full cursor-pointer items-center justify-center px-5 py-3 text-sm font-medium transition-colors duration-150",
+                            plan.highlighted
+                                ? "bg-background text-foreground hover:opacity-90"
+                                : "border border-border text-foreground hover:bg-secondary",
+                        ]}
+                    >
+                        {plan.cta.label}
+                    </a>
+                </div>
+            ))
+        }
+    </div>
+</section>

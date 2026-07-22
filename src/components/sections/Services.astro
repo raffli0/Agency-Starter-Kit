@@ -1,0 +1,30 @@
+---
+import type { ServiceItem } from "../../types/service";
+import ServiceCard from "../cards/ServiceCard.astro";
+import Reveal from "../animation/Reveal.astro";
+
+interface Props {
+    title?: string;
+    services: ServiceItem[];
+}
+
+const { title = "What we do", services } = Astro.props;
+---
+
+<section class="mt-20">
+    <div class="border-primary flex items-end justify-between gap-4 border-b pb-4">
+        <h2 class="text-foreground text-2xl font-semibold tracking-tight">{title}</h2>
+        <span class="text-muted-foreground hidden text-xs tracking-[0.16em] uppercase sm:block">
+            01
+        </span>
+    </div>
+    <Reveal
+        animation="slide-up"
+        stagger
+        staggerAmount={0.1}
+        duration={0.6}
+        class="bg-border-primary mt-8 grid gap-px sm:grid-cols-2 lg:grid-cols-4"
+    >
+        {services.map((service) => <ServiceCard service={service} />)}
+    </Reveal>
+</section>

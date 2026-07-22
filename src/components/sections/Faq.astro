@@ -1,0 +1,28 @@
+---
+import type { FAQItem } from "../../types/faq";
+
+interface Props {
+    title?: string;
+    items: FAQItem[];
+}
+
+const { title = "Frequently asked questions", items } = Astro.props;
+---
+
+<section class="mt-20">
+    <div class="border-border flex items-end justify-between gap-4 border-b pb-4">
+        <h2 class="text-foreground text-2xl font-semibold tracking-tight">{title}</h2>
+    </div>
+    <div class="border-border-primary mt-8 space-y-0 border">
+        {
+            items.map((item) => (
+                <details class="border-brand border-b last:border-b-0">
+                    <summary class="text-foreground hover:bg-secondary/50 cursor-pointer px-6 py-5 font-medium tracking-tight transition-colors duration-150">
+                        {item.question}
+                    </summary>
+                    <p class="text-muted-foreground px-6 pb-5 text-sm leading-6">{item.answer}</p>
+                </details>
+            ))
+        }
+    </div>
+</section>

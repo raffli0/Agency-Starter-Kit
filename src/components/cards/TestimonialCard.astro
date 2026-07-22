@@ -1,0 +1,20 @@
+---
+import type { Testimonial } from "../../types/testimonial";
+
+interface Props {
+    testimonial: Testimonial;
+}
+
+const { testimonial } = Astro.props;
+---
+
+<blockquote class="border-border-primary bg-card border p-6">
+    <p class="text-muted-foreground text-sm leading-6">“{testimonial.quote}”</p>
+    <footer
+        class="border-border text-muted-foreground mt-6 border-t pt-4 text-xs tracking-[0.06em] uppercase"
+    >
+        <span class="text-foreground font-semibold">{testimonial.author}</span>
+        <span class="mx-1">—</span>
+        {testimonial.role}, {testimonial.company}
+    </footer>
+</blockquote>

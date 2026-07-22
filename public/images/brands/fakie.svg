@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" role="img" aria-label="Fakie">
+  <title>Fakie</title>
+  <g fill="currentColor">
+    <rect x="2" y="8" width="24" height="24" rx="2"/>
+    <path d="M8 16h12v2.5H11v3h8v2.5H11V28H8V16z" fill="#fff"/>
+    <text x="36" y="27" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="600" letter-spacing="-0.04em">Fakie</text>
+  </g>
+</svg>

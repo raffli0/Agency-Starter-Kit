@@ -1,0 +1,21 @@
+---
+import { socialConfig, socialLabels } from "../../config/social";
+
+const entries = Object.entries(socialConfig) as [keyof typeof socialConfig, string][];
+---
+
+<nav class="flex gap-4" aria-label="Social links">
+    {
+        entries.map(([key, url]) => (
+            <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm text-muted-foreground transition-colors duration-150 hover:text-foreground"
+                aria-label={socialLabels[key]}
+            >
+                {socialLabels[key]}
+            </a>
+        ))
+    }
+</nav>

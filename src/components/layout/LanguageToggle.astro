@@ -1,0 +1,39 @@
+---
+import { locales, localeLabels, type Locale } from "../../i18n/config";
+import { switchLocalePath } from "../../i18n/utils";
+
+interface Props {
+    locale: Locale;
+}
+
+const { locale } = Astro.props;
+const pathname = Astro.url.pathname;
+---
+
+<div
+    class="flex items-center border border-border"
+    role="group"
+    aria-label={locale === "id" ? "Bahasa" : "Language"}
+>
+    {
+        locales.map((lang) => {
+            const href = switchLocalePath(pathname, lang);
+            const active = lang === locale;
+            return (
+                <a
+                    href={href}
+                    hreflang={lang}
+                    aria-current={active ? "page" : undefined}
+                    class:list={[
+                        "inline-flex min-h-9 min-w-9 cursor-pointer items-center justify-center px-2.5 text-xs font-medium tracking-[0.12em] transition-colors duration-150",
+                        active
+                            ? "bg-primary text-primary-foreground"
+                            : "text-muted-foreground hover:text-foreground",
+                    ]}
+                >
+                    {localeLabels[lang]}
+                </a>
+            );
+        })
+    }
+</div>

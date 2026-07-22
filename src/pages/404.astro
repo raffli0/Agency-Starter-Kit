@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "../components/ui/Container.astro";
+import { useTranslations, localizePath } from "../i18n/utils";
+import type { Locale } from "../i18n/config";
+
+const locale: Locale = "en";
+const t = useTranslations(locale);
+---
+
+<BaseLayout meta={{ title: t("404.title"), noindex: true }} locale={locale}>
+    <Container class="py-32 text-center">
+        <p class="text-xs font-medium tracking-[0.28em] text-brand uppercase">{t("404.code")}</p>
+        <h1 class="mt-4 text-4xl font-semibold tracking-tight text-foreground">{t("404.title")}</h1>
+        <p class="mx-auto mt-4 max-w-md text-muted-foreground">{t("404.description")}</p>
+        <a
+            href={localizePath("/", locale)}
+            class="mt-8 inline-flex cursor-pointer items-center justify-center bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors duration-150 hover:bg-primary/90"
+            >{t("404.home")}</a
+        >
+    </Container>
+</BaseLayout>
